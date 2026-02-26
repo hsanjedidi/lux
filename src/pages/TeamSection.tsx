@@ -113,7 +113,7 @@ const TeamSection = () => {
               >
                 The people
                 <br />
-                <em className="italic text-[#7A6A55]">behind the work</em>
+                <em className="italic text-[#7A6A55]">behind the Luxuria</em>
               </h2>
             </motion.div>
 

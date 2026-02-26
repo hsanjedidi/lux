@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "@/assets/IMG-20260225-WA0001.jpg";
+import logo from "@/assets/log-Photoroom.png";
 
 const navItems = [
   { label: "About", path: "/about" },
-  { label: "Menu", path: "/menu" },
+    { label: "Hospitality Management", path: "/hospitality-management" },
+  { label: "Excellence Training", path: "/excellence-training" },
   { label: "Events", path: "/events" },
   { label: "Contact", path: "/contact" },
-  { label: "Hospitality Management", path: "/hospitality-management" },
-  { label: "Excellence Training", path: "/excellence-training" },
+
 ];
 
 const Navbar = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-8 py-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="Luxuria" className="h-8 invert" />
+          <img src={logo} alt="Luxuria" className="h-24 " />
         </Link>
 
         {/* Desktop */}

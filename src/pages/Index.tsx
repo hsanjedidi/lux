@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import heroImg from "@/assets/heo1.jpeg";
-import menuImg from "@/assets/menu-hero.jpg";
+import heroImg from "@/assets/background.jpg";
+import menuImg from "@/assets/cheese_board.jpeg";
 
-import sculptureImg from "@/assets/hero.jpg";
+import sculptureImg from "@/assets/tikki_blaze.jpeg";
 
 // 👉 Imports Équipe
 import logoPartner1 from "@/assets/sp.png";
@@ -21,7 +21,7 @@ import { V } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 // --- CONFIGURATION DES SPONSORS ---
 // Remplace les liens par tes logos réels dans /assets/
 const sponsors = [
- { name: "Partner 1", logo: logoPartner1 },
+  { name: "Partner 1", logo: logoPartner1 },
   { name: "Partner 2", logo: logoPartner2 },
   { name: "Partner 3", logo: logoPartner3 },
   { name: "Partner 4", logo: logoPartner4 },
@@ -34,50 +34,49 @@ const sponsors = [
 const SponsorBand = () => {
   return (
     <section className="py-20 border-y border-white/5 bg-white overflow-hidden">
-  <div className="mb-10 text-center">
-    <motion.p 
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      className="font-body text-[10px] tracking-[0.4em] uppercase text-primary/30"
-    >
-      Our Partners & Collaborators
-    </motion.p>
-  </div>
-
-  <div className="flex overflow-hidden relative">
-    {/* Optionnel : Dégradés sur les côtés pour masquer l'entrée/sortie proprement */}
- 
-
-    <motion.div
-      className="flex space-x-16 md:space-x-24 whitespace-nowrap will-change-transform"
-      animate={{ x: ["0%", "-50%"] }}
-      transition={{
-        repeat: Infinity,
-        duration: 30,
-        ease: "linear",
-      }}
-      style={{ transformStyle: "preserve-3d" }} // Évite le flou sur certains navigateurs
-    >
-      {[...sponsors, ...sponsors].map((sponsor, index) => (
-        <div
-          key={index}
-          className="flex items-center justify-center min-w-[120px] md:min-w-[180px] transition-all duration-700"
+      <div className="mb-10 text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="font-body text-[10px] tracking-[0.4em] uppercase text-primary/30"
         >
-          <img
-            src={sponsor.logo}
-            alt={sponsor.name}
-            // backface-visibility et transform-gpu empêchent le flou durant le mouvement
-            className="h-8 md:h-20 w-auto object-contain opacity-40 hover:opacity-100 transition-opacity duration-500 transform-gpu"
-            style={{ 
-               WebkitBackfaceVisibility: "hidden",
-               backfaceVisibility: "hidden"
-            }}
-          />
-        </div>
-      ))}
-    </motion.div>
-  </div>
-</section>
+          Our Partners & Collaborators
+        </motion.p>
+      </div>
+
+      <div className="flex overflow-hidden relative">
+        {/* Optionnel : Dégradés sur les côtés pour masquer l'entrée/sortie proprement */}
+
+        <motion.div
+          className="flex space-x-16 md:space-x-24 whitespace-nowrap will-change-transform"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 30,
+            ease: "linear",
+          }}
+          style={{ transformStyle: "preserve-3d" }} // Évite le flou sur certains navigateurs
+        >
+          {[...sponsors, ...sponsors].map((sponsor, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center min-w-[120px] md:min-w-[180px] transition-all duration-700"
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                // backface-visibility et transform-gpu empêchent le flou durant le mouvement
+                className="h-8 md:h-20 w-auto object-contain opacity-40 hover:opacity-100 transition-opacity duration-500 transform-gpu"
+                style={{
+                  WebkitBackfaceVisibility: "hidden",
+                  backfaceVisibility: "hidden",
+                }}
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
@@ -99,7 +98,7 @@ const Index = () => {
             transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="font-display text-5xl md:text-7xl lg:text-[90px] text-primary leading-[1.1] mb-8"
           >
-            Crafting Exceptional Experiences
+            Setting New Standards in Luxury Hospitality
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -131,111 +130,13 @@ const Index = () => {
       </section>
 
       {/* Intro Statement */}
-      <section className="relative overflow-hidden bg-[#111]">
-        <div className="relative min-h-[880px] flex flex-col items-center justify-center py-24 px-6">
-          {/* LEFT image — sculpture */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.15 }}
-            className="absolute hidden lg:block overflow-hidden"
-            style={{
-              width: "clamp(200px, 22vw, 320px)",
-              aspectRatio: "3/4",
-              bottom: "0",
-              left: "10%",
-            }}
-          >
-            <img
-              src={sculptureImg}
-              alt="Sculpture art"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-
-          {/* RIGHT image — cocktails */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="absolute hidden lg:block overflow-hidden"
-            style={{
-              width: "clamp(200px, 22vw, 320px)",
-              aspectRatio: "4/3",
-              top: "20%",
-              right: "10%",
-            }}
-          >
-            <img
-              src={menuImg}
-              alt="Cocktails and dining"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="font-body text-[11px] md:text-[13px] tracking-[0.22em] uppercase text-center mb-10 z-10"
-            style={{ color: "rgba(240,230,210,0.7)" }}
-          >
-            DESIGNED EXPERIENCES WHERE YOU
-            <br />
-            CAN CONNECT WITH YOUR INNER-SELF
-          </motion.p>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="font-display text-center z-10 leading-[1.05] mb-12"
-            style={{
-              color: "#e8dcc8",
-              fontSize: "clamp(60px, 9vw, 90px)",
-              fontStyle: "italic",
-            }}
-          >
-            Lights,
-            <br />
-            Camera,
-            <br />
-            Action!
-          </motion.h2>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="z-10"
-          >
-            <Link
-              to="/about"
-              className="inline-block font-body text-[12px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-white/10"
-              style={{
-                color: "#e8dcc8",
-                border: "1px solid rgba(232,220,200,0.5)",
-                borderRadius: "50px",
-                padding: "14px 40px",
-              }}
-            >
-              LEARN MORE
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+     
 
       {/* BANDE SPONSORS - Positionnée stratégiquement avant l'équipe */}
-     
 
       {/* Team Section */}
       <TeamSection />
- <SponsorBand />
+      <SponsorBand />
       {/* Newsletter / CTA */}
       <section className="py-32 px-6 border-t border-white/5">
         <div className="container mx-auto max-w-2xl text-center">
@@ -252,7 +153,7 @@ const Index = () => {
               Experience the extraordinary
             </h2>
             <Link
-              to="/contact"
+              to="/events"
               className="inline-block border border-primary/40 text-primary px-10 py-4 font-body text-[13px] tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-all duration-500"
             >
               See Events

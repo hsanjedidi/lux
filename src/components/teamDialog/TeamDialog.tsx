@@ -58,35 +58,7 @@ const TeamDialog = ({
             </div>
 
             {/* Footer - Social & Action */}
-            <div className="mt-12 pt-8 border-t border-white/5 flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="flex gap-8">
-                <a
-                  href="#"
-                  className="text-zinc-500 hover:text-primary transition-colors duration-300"
-                >
-                  <Linkedin className="w-5 h-5 stroke-[1.5px]" />
-                </a>
-                <a
-                  href="#"
-                  className="text-zinc-500 hover:text-primary transition-colors duration-300"
-                >
-                  <Twitter className="w-5 h-5 stroke-[1.5px]" />
-                </a>
-                <a
-                  href="#"
-                  className="text-zinc-500 hover:text-primary transition-colors duration-300"
-                >
-                  <Mail className="w-5 h-5 stroke-[1.5px]" />
-                </a>
-              </div>
-
-              <button className="group flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300">
-                <span className="group-hover:tracking-[0.4em] transition-all duration-500">
-                  Explorer le Portfolio
-                </span>
-                <div className="w-12 h-[1px] bg-primary/60 group-hover:w-20 transition-all duration-500" />
-              </button>
-            </div>
+         
           </div>
         </div>
       </DialogContent>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/log.png";
+import logo from "@/assets/log-Photoroom.png";
 
 const Footer = () => {
   return (
@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12 md:gap-8">
           {/* Logo & Address */}
           <div className="md:col-span-1">
-            <img src={logo} alt="Luxuria" className="h-8 invert mb-8" />
+            <img src={logo} alt="Luxuria" className="h-24  mb-8" />
             <p className="font-body text-sm text-primary/60 leading-relaxed">
               Building 436-2, Road 3815, Block 338
             </p>
@@ -37,7 +37,15 @@ const Footer = () => {
                   href="tel:+973XXXXX"
                   className="hover:text-primary transition-colors"
                 >
-                  +973 XXXX XXXX
+                  +973 34588466
+                  
+                </a>
+                <br/>
+                   <a
+                  href="tel:+973XXXXX"
+                  className="hover:text-primary transition-colors"
+                >
+                  +973 34221111
                 </a>
               </li>
               <li>
@@ -45,7 +53,7 @@ const Footer = () => {
                   href="mailto:info@luxuriahm.com"
                   className="hover:text-primary transition-colors"
                 >
-                  info@luxuriahm.com
+                  info@luxury.com
                 </a>
               </li>
             </ul>

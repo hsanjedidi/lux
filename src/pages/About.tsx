@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-
+import MDPhoto from '@/assets/team-mohamed-khalid.jpg'; // Adaptez le chemin et l'extension
 // ─── Assets ──────────────────────────────────────────────────────────────────
 import aboutImg from "@/assets/about-hero.jpg";
 // Note: Remplacez par le chemin réel de la photo du directeur
@@ -475,26 +475,29 @@ const About = () => {
               }}
             >
               {/* Image Placeholder - à remplacer par {mdPhoto} */}
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "linear-gradient(45deg, #0C0A08, #1a1a1a)",
-                }}
-              >
-                <span
-                  style={{
-                    color: gold,
-                    opacity: 0.5,
-                    fontFamily: "'Cormorant Garamond', serif",
-                  }}
-                >
-                  Managing Director Photo
-                </span>
-              </div>
+         <div
+  style={{
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "linear-gradient(45deg, #0C0A08, #1a1a1a)",
+    overflow: "hidden", // Assure que l'image ne dépasse pas du cadre
+  }}
+>
+  <img
+    src={MDPhoto}
+    alt="Managing Director"
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover", // Remplit le cadre sans déformer
+      opacity: 0.8,       // Optionnel : garde l'aspect sobre et élégant
+      display: "block"
+    }}
+  />
+</div>
             </div>
           </motion.div>
 
