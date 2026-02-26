@@ -3,7 +3,12 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,11 +41,18 @@ const Contact = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h3 className="font-display text-2xl text-primary mb-8">Visit Us</h3>
+              <h3 className="font-display text-2xl text-primary mb-8">
+                Visit Us
+              </h3>
               <ul className="space-y-6 font-body text-sm text-primary/70">
                 <li className="flex items-start gap-4">
-                  <MapPin size={16} className="mt-0.5 shrink-0 text-primary/40" />
-                  <span>Building 436-2, Road 3815, Block 338 – Manama, Bahrain</span>
+                  <MapPin
+                    size={16}
+                    className="mt-0.5 shrink-0 text-primary/40"
+                  />
+                  <span>
+                    Building 436-2, Road 3815, Block 338 – Manama, Bahrain
+                  </span>
                 </li>
                 <li className="flex items-center gap-4">
                   <Phone size={16} className="shrink-0 text-primary/40" />
@@ -77,7 +89,9 @@ const Contact = () => {
                   <input
                     type={field.type}
                     value={formData[field.name as keyof typeof formData]}
-                    onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, [field.name]: e.target.value })
+                    }
                     required={field.name !== "phone"}
                     className="w-full bg-transparent border-b border-border py-3 font-body text-sm text-primary focus:outline-none focus:border-primary transition-colors"
                   />
@@ -90,7 +104,9 @@ const Contact = () => {
                 <textarea
                   rows={4}
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   required
                   className="w-full bg-transparent border-b border-border py-3 font-body text-sm text-primary focus:outline-none focus:border-primary transition-colors resize-none"
                 />

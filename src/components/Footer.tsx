@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/luxuria-logo.jpg";
+import logo from "@/assets/log.png";
 
 const Footer = () => {
   return (
@@ -32,10 +32,19 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3 font-body text-sm text-primary/70">
               <li>
-                TEL: <a href="tel:+973XXXXX" className="hover:text-primary transition-colors">+973 XXXX XXXX</a>
+                TEL:{" "}
+                <a
+                  href="tel:+973XXXXX"
+                  className="hover:text-primary transition-colors"
+                >
+                  +973 XXXX XXXX
+                </a>
               </li>
               <li>
-                <a href="mailto:info@luxuriahm.com" className="hover:text-primary transition-colors">
+                <a
+                  href="mailto:info@luxuriahm.com"
+                  className="hover:text-primary transition-colors"
+                >
                   info@luxuriahm.com
                 </a>
               </li>

@@ -7,7 +7,7 @@ import team2Img from "@/assets/team-elias.jpg";
 import team3Img from "@/assets/team-saad.jpg";
 import team4Img from "@/assets/team-andy.jpg";
 import team5Img from "@/assets/team-mohamed-l.jpg";
-import team6Img from "@/assets/team-mohamed-l.jpg";
+import team6Img from "@/assets/team-andrei.jpg";
 import TeamDialog from "@/components/teamDialog/TeamDialog";
 
 export type TeamMember = {
@@ -22,42 +22,43 @@ const team: TeamMember[] = [
     role: "Co-Founder – Managing Director",
     image: team1Img,
     description:
-      "With over 12 years in the entertainment industry, Mohamed led Luxuria Hospitality Management to become a leading destination in Bahrain, creating Volto — the highest footfall restaurant & lounge, winner of Fact Dining Awards 2025 for People's Favorite Experience.",
+      "Under his leadership, Luxuria Hospitality Management achieved remarkable growth within its first year, establishing itself as a leading hospitality, entertainment, and lifestyle destination by creating Volto Restaurant located in Block 338, Adliya. Volto is concedered as the highest footfall restaurant & lounge in bahrain as its fully booked everyday. Volto won Fact Dining Awards 2025 for the people’s favorite experience in Bahrain.Beyond Volto, Mohamed is an experienced businessman with over 12 years in the entertainment industry as an event organizer. His background spans hotels, resorts, restaurants, lounges, concerts, and corporate events. Throughout his career, he has collaborated with many international brands and global artists, both in Bahrain and internationally. His strategic mindset, combined with a willingness to take well-calculated risks, continues to drive sustainable growth and long-term success. He has played a key role in shaping the restaurant’s business development strategy, introducing innovative concepts that enhanced operations, strengthened the brand identity, and significantly improved profitability. ",
+      
   },
   {
     name: "Elias Fernandes",
     role: "General Manager",
     image: team2Img,
     description:
-      "Originally from Goa, India, Elias brings over 24 years of operational experience. Former General Manager of the Alumni Club in Bahrain, he oversees administration, HR, procurement, and financial management at Volto.",
+      "Originally from Goa, India—renowned for its vibrant tourism and hospitality culture—Elias brings over 24 years of extensive operational experience to the organization.A university graduate with a strong track record in business growth and operational efficiency, he has built expertise in operations management, supplier relations, team leadership, and financial oversight. Prior to joining Luxuria Hospitality Management, Elias served as General Manager of the well-known Alumni Club in Bahrain, where he successfully led large-scale operations and community-driven initiatives.At Volto, Elias oversees day-to-day administration, vendor management, HR operations, procurement, and overall financial management, ensuring operational excellence, cost control, and sustainable performance across the organization.",
   },
   {
     name: "Saad Al Romaihi",
     role: "Operation Manager",
     image: team3Img,
     description:
-      "A Bahraini hospitality professional with over 15 years of experience across premier venues including Apollo, Level 5, and Cielo. Saad ensures smooth day-to-day operations, staff training, and consistent service excellence at Volto.",
+      "Operations are led by Saad Al Romaihi, a multi-talented Bahraini hospitality professional with over 15 years of industry experience. He has built a strong track record in operations management, venue leadership, and nightlife hospitality across several prominent first-class destinations in Bahrain, including , Apollo, Level 5, The One, Cielo and more.Over six years in high-profile restaurant and nightlife management, Saad refined his expertise in team leadership, guest experience, operational control, and event-driven environments. In 2020, he advanced to the role of General Manager at Retro Lounge, where he oversaw full operational management, staff allocation, customer relations, and marketing initiatives.In 2023, he joined Volto Restaurant, bringing extensive hands-on experience in day-to-day operations, supplier coordination, staff training, and performance management—ensuring smooth operations and consistent service excellence.",
   },
   {
     name: "Andy Zyla",
     role: "Group Executive Chef",
     image: team4Img,
     description:
-      "With 25+ years across the UK, Maldives, UAE, Saudi Arabia, and Bahrain, Andy has helmed kitchens at Soneva Fushi, The Ritz-Carlton, and Golf Saudi. He leads all culinary strategy and innovation across Luxuria's concepts.",
+      "an internationally experienced culinary executive with over 25 years of leadership across the United Kingdom, Maldives, United Arab Emirates, Saudi Arabia, and Bahrain. Originally trained in Mathematics and Physics in Poland, he combines analytical thinking with strong operational expertise, positioning him as a strategic leader within luxury hospitality and multi-unit environments.He began his career in London in 1999, rising quickly into senior kitchen roles at prestigious establishments including Chelsea Arts Club and William IV. In 2008, he joined Soneva Fushi in the Maldives, where he led the launch of the country’s first Japanese-Peruvian restaurant.Andy later held executive positions in Dubai, including Address Montgomerie, and oversaw multi-unit culinary operations across 12 outlets with Point-Select. He played a key role in the pre-opening of The Ritz-Carlton Al-Hamra Beach and later served as Group Executive Chef at Golf Saudi, leading culinary strategy across multiple venues.In 2022, he led the opening of Gallery 7/40 Beach Club on Palm Jumeirah. Today, as Group Executive Chef of Luxuria Hospitality Managemnet Group in Bahrain, he oversees all current and upcoming concepts, aligning culinary innovation with strategic growth, operational excellence, and financial performance.",
   },
   {
     name: "Mohamed Loumrhari",
     role: "Floor Manager",
     image: team5Img,
     description:
-      "With over a decade in fine dining and luxury hospitality across the GCC, Mohamed ensures seamless operations and elevated guest experiences. Fluent in Arabic, English, and French, he embodies Volto's standard of excellence.",
+      "Brings over a decade of hospitality experience to his role as Floor Manager at Volto. With a background in fine dining, luxury hotels, and high-end restaurant openings across the GCC, he is recognized for delivering seamless operations and elevated guest experiences.He has successfully led diverse teams, strengthened service standards, and supported the launch and growth of upscale concepts. Known for his precision, professionalism, and attention to detail, Mohamed ensures that every guest interaction reflects Volto’s commitment to excellence. Fluent in Arabic, English, and French, he brings a strong multicultural perspective and a refined approach to hospitality.",
   },
   {
     name: "Andrei Bodrug",
     role: "Bar Manager",
     image: team6Img,
     description:
-      "A master mixologist with 15 years spanning Europe and the Middle East, Andrei reinterprets classic techniques into refined modern experiences — treating every cocktail as a craft and a form of storytelling.",
+      "15 years of experience in the hospitality industry, building a strong reputation for precision, creativity, and excellence in mixology. He is known for reinterpreting classic techniques into refined, modern experiences, treating bartending as both a craft and a form of storytelling.His career spans the Middle East and Europe, where he has worked in high-profile venues and developed a diverse understanding of global flavor profiles. A recognized competitor in multiple bar competitions, Andrei combines technical expertise with innovation to create cocktails that embody elegance, originality, and lasting impression.",
   },
 ];
 
@@ -73,12 +74,6 @@ const TeamSection = () => {
   return (
     <>
       {/* Team Section — Editorial Luxury Redesign */}
-      {/* 
-  Required: 
-  - @fontsource/playfair-display or Google Fonts: Playfair Display + DM Sans
-  - framer-motion
-  - tailwindcss
-*/}
 
       <section className="relative py-32 px-6 bg-white overflow-hidden">
         <TeamDialog
@@ -228,12 +223,6 @@ const TeamSection = () => {
                     style={{ fontFamily: "'DM Sans', sans-serif" }}
                   >
                     {member.role}
-                  </p>
-                  <p
-                    className="text-[13px] leading-relaxed text-[#5C5044] max-w-[280px]"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
-                  >
-                    {member.description}
                   </p>
                 </div>
               </motion.article>

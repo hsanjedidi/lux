@@ -1,90 +1,89 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/heo1.jpeg";
 import menuImg from "@/assets/menu-hero.jpg";
-import eventsImg from "@/assets/events-hero.jpg";
-import aboutImg from "@/assets/about-hero.jpg";
+
 import sculptureImg from "@/assets/hero.jpg";
 
-// 👉 Remplace par tes vraies photos de l'équipe
-import team1Img from "@/assets/team-mohamed-khalid.jpg";
-import team2Img from "@/assets/team-elias.jpg";
-import team3Img from "@/assets/team-saad.jpg";
-import team4Img from "@/assets/team-andy.jpg";
-import team5Img from "@/assets/team-mohamed-l.jpg";
-import team6Img from "@/assets/team-mohamed-l.jpg";
+// 👉 Imports Équipe
+import logoPartner1 from "@/assets/sp.png";
+import logoPartner2 from "@/assets/sp1.png";
+import logoPartner3 from "@/assets/sp2.png";
+import logoPartner4 from "@/assets/sp3.png";
+import logoPartner5 from "@/assets/sp4.png";
+import logoPartner6 from "@/assets/sp5.png";
+import logoPartner7 from "@/assets/sp6.png";
+import logoPartner8 from "@/assets/sp7.png";
+
 import TeamSection from "./TeamSection";
+import { V } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 
-const concepts = [
-  {
-    title: "Fine Dining",
-    desc: "Authentic culinary experiences that connect people and celebrate exceptional cuisine crafted by world-class chefs.",
-    image: menuImg,
-    link: "/menu",
-  },
-  {
-    title: "Events & Entertainment",
-    desc: "Over 25 years of experience in entertainment with collaborations with 15+ international brands creating unforgettable nights.",
-    image: eventsImg,
-    link: "/events",
-  },
-  {
-    title: "Lifestyle Destinations",
-    desc: "Creating premium hospitality destinations that set new benchmarks in quality, service, and experiential luxury.",
-    image: aboutImg,
-    link: "/about",
-  },
+// --- CONFIGURATION DES SPONSORS ---
+// Remplace les liens par tes logos réels dans /assets/
+const sponsors = [
+ { name: "Partner 1", logo: logoPartner1 },
+  { name: "Partner 2", logo: logoPartner2 },
+  { name: "Partner 3", logo: logoPartner3 },
+  { name: "Partner 4", logo: logoPartner4 },
+  { name: "Partner 5", logo: logoPartner5 },
+  { name: "Partner 6", logo: logoPartner6 },
+  { name: "Partner 7", logo: logoPartner7 },
+  { name: "Partner 8", logo: logoPartner8 },
 ];
 
-const team = [
-  {
-    name: "Mohamed Khalid AlMuharraqi",
-    role: "Co-Founder – Managing Director",
-    image: team1Img,
-    description:
-      "With over 12 years in the entertainment industry, Mohamed led Luxuria Hospitality Management to become a leading destination in Bahrain, creating Volto — the highest footfall restaurant & lounge, winner of Fact Dining Awards 2025 for People's Favorite Experience.",
-  },
-  {
-    name: "Elias Fernandes",
-    role: "General Manager",
-    image: team2Img,
-    description:
-      "Originally from Goa, India, Elias brings over 24 years of operational experience. Former General Manager of the Alumni Club in Bahrain, he oversees administration, HR, procurement, and financial management at Volto.",
-  },
-  {
-    name: "Saad Al Romaihi",
-    role: "Operation Manager",
-    image: team3Img,
-    description:
-      "A Bahraini hospitality professional with over 15 years of experience across premier venues including Apollo, Level 5, and Cielo. Saad ensures smooth day-to-day operations, staff training, and consistent service excellence at Volto.",
-  },
-  {
-    name: "Andy Zyla",
-    role: "Group Executive Chef",
-    image: team4Img,
-    description:
-      "With 25+ years across the UK, Maldives, UAE, Saudi Arabia, and Bahrain, Andy has helmed kitchens at Soneva Fushi, The Ritz-Carlton, and Golf Saudi. He leads all culinary strategy and innovation across Luxuria's concepts.",
-  },
-  {
-    name: "Mohamed Loumrhari",
-    role: "Floor Manager",
-    image: team5Img,
-    description:
-      "With over a decade in fine dining and luxury hospitality across the GCC, Mohamed ensures seamless operations and elevated guest experiences. Fluent in Arabic, English, and French, he embodies Volto's standard of excellence.",
-  },
-  {
-    name: "Andrei Bodrug",
-    role: "Bar Manager",
-    image: team6Img,
-    description:
-      "A master mixologist with 15 years spanning Europe and the Middle East, Andrei reinterprets classic techniques into refined modern experiences — treating every cocktail as a craft and a form of storytelling.",
-  },
-];
+const SponsorBand = () => {
+  return (
+    <section className="py-20 border-y border-white/5 bg-white overflow-hidden">
+  <div className="mb-10 text-center">
+    <motion.p 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      className="font-body text-[10px] tracking-[0.4em] uppercase text-primary/30"
+    >
+      Our Partners & Collaborators
+    </motion.p>
+  </div>
+
+  <div className="flex overflow-hidden relative">
+    {/* Optionnel : Dégradés sur les côtés pour masquer l'entrée/sortie proprement */}
+ 
+
+    <motion.div
+      className="flex space-x-16 md:space-x-24 whitespace-nowrap will-change-transform"
+      animate={{ x: ["0%", "-50%"] }}
+      transition={{
+        repeat: Infinity,
+        duration: 30,
+        ease: "linear",
+      }}
+      style={{ transformStyle: "preserve-3d" }} // Évite le flou sur certains navigateurs
+    >
+      {[...sponsors, ...sponsors].map((sponsor, index) => (
+        <div
+          key={index}
+          className="flex items-center justify-center min-w-[120px] md:min-w-[180px] transition-all duration-700"
+        >
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            // backface-visibility et transform-gpu empêchent le flou durant le mouvement
+            className="h-8 md:h-20 w-auto object-contain opacity-40 hover:opacity-100 transition-opacity duration-500 transform-gpu"
+            style={{ 
+               WebkitBackfaceVisibility: "hidden",
+               backfaceVisibility: "hidden"
+            }}
+          />
+        </div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+  );
+};
 
 const Index = () => {
   return (
-    <main>
+    <main className="bg-[#111]">
       {/* Hero — Full Screen */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div
@@ -132,18 +131,15 @@ const Index = () => {
       </section>
 
       {/* Intro Statement */}
-      <section
-        style={{ backgroundColor: "#111" }}
-        className="relative overflow-hidden"
-      >
+      <section className="relative overflow-hidden bg-[#111]">
         <div className="relative min-h-[880px] flex flex-col items-center justify-center py-24 px-6">
-          {/* LEFT image — sculpture, lower-left */}
+          {/* LEFT image — sculpture */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.15 }}
-            className="absolute overflow-hidden"
+            className="absolute hidden lg:block overflow-hidden"
             style={{
               width: "clamp(200px, 22vw, 320px)",
               aspectRatio: "3/4",
@@ -158,13 +154,13 @@ const Index = () => {
             />
           </motion.div>
 
-          {/* RIGHT image — cocktails, upper-right */}
+          {/* RIGHT image — cocktails */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="absolute overflow-hidden"
+            className="absolute hidden lg:block overflow-hidden"
             style={{
               width: "clamp(200px, 22vw, 320px)",
               aspectRatio: "4/3",
@@ -179,7 +175,6 @@ const Index = () => {
             />
           </motion.div>
 
-          {/* Subtitle — top center */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -193,7 +188,6 @@ const Index = () => {
             CAN CONNECT WITH YOUR INNER-SELF
           </motion.p>
 
-          {/* Headline */}
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -202,7 +196,7 @@ const Index = () => {
             className="font-display text-center z-10 leading-[1.05] mb-12"
             style={{
               color: "#e8dcc8",
-              fontSize: "clamp(60px, 9vw, 115px)",
+              fontSize: "clamp(60px, 9vw, 90px)",
               fontStyle: "italic",
             }}
           >
@@ -213,7 +207,6 @@ const Index = () => {
             Action!
           </motion.h2>
 
-          {/* CTA button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -237,10 +230,14 @@ const Index = () => {
         </div>
       </section>
 
-      <TeamSection />
+      {/* BANDE SPONSORS - Positionnée stratégiquement avant l'équipe */}
+     
 
+      {/* Team Section */}
+      <TeamSection />
+ <SponsorBand />
       {/* Newsletter / CTA */}
-      <section className="py-32 px-6 border-t border-border">
+      <section className="py-32 px-6 border-t border-white/5">
         <div className="container mx-auto max-w-2xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,7 +255,7 @@ const Index = () => {
               to="/contact"
               className="inline-block border border-primary/40 text-primary px-10 py-4 font-body text-[13px] tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-all duration-500"
             >
-              Get In Touch
+              See Events
             </Link>
           </motion.div>
         </div>

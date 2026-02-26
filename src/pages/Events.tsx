@@ -1,116 +1,256 @@
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import eventsImg from "@/assets/events-hero.jpg";
-import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, X, ChevronLeft, ChevronRight } from "lucide-react";
 
-const upcomingEvents = [
+const pastEvents = [
   {
-    title: "International DJ Night",
-    date: "March 15, 2026",
-    time: "9:00 PM - 3:00 AM",
+    id: 1,
+    title: "DYSTINCT",
+    subtitle: "Multi Platinum",
+    tag: "FOR THE FIRST TIME IN BAHRAIN",
+    date: "THURSDAY 15.01.2026",
+    time: "FROM 7PM TO 2:30AM",
+    category: "SPECIAL",
     location: "Volto Restaurant & Lounge",
-    desc: "An electrifying night featuring world-renowned DJs, premium cocktails, and an unforgettable atmosphere.",
+    image: "/dystinct.webp",
+    description:
+      "Experience an exclusive evening of music, luxury, and high energy as DYSTINCT takes the stage in one of Bahrain’s most premium nightlife destinations. Known for his global hits and unique international sound, this special event promises an extraordinary atmosphere, premium vibes, and a world-class entertainment experience.",
+    accent: "#c9a84c",
+    bg: "#1a1008",
   },
   {
-    title: "Wine & Dine Experience",
-    date: "March 22, 2026",
-    time: "7:00 PM - 11:00 PM",
+    id: 2,
+    title: "FANTOMEL KATE LINN & DONY",
+    subtitle: "DAME UN GRRR –",
+    tag: "FOR THE FIRST TIME IN BAHRAIN",
+    date: "SATURDAY 07.02.2026",
+    time: "FROM 3PM TO 9PM",
+    category: "SPECIAL",
+    location: "Volto Restaurant & Lounge",
+    image: "/FinalFLyerbysaad.webp",
+    description:
+      "Volto lights up with an explosive night of sound and energy. Get ready for a high-voltage live experience with Fantomel, Kate Linn & Dony, bringing their signature global vibes to the dancefloor. Feel the crowd erupt as Fantomel & Kate Linn perform their massive hit “DAME UN GRRR”, the track that’s taken clubs worldwide by storm.",
+    accent: "#e8e0d0",
+    bg: "#141414",
+  },
+  {
+    id: 3,
+    title: "New Year Celebrations",
+    subtitle: "20% DISCOUNT",
+    tag: "FOR COUPLES ON FOOD & WINE",
+    date: "SATURDAY 14TH FEB",
+    time: "FROM 7PM TO 10PM",
+    category: "SPECIAL",
     location: "Volto Restaurant",
-    desc: "A curated five-course dinner paired with exclusive wines from renowned vineyards around the world.",
-  },
-  {
-    title: "Private Corporate Gala",
-    date: "April 5, 2026",
-    time: "7:30 PM - 12:00 AM",
-    location: "Luxuria Private Venue",
-    desc: "Bespoke corporate events designed to impress, with personalized menus and world-class entertainment.",
-  },
-  {
-    title: "Chef's Table: An Intimate Experience",
-    date: "April 12, 2026",
-    time: "8:00 PM - 11:00 PM",
-    location: "Volto Restaurant",
-    desc: "An exclusive 8-seat experience with Group Executive Chef Andy Zyla, featuring a surprise multi-course tasting menu.",
+    image: "/NewYear2026Flyer.webp",
+    description:
+      "🔥 This New Year’s Eve… Volto Bahrain goes BIG! 🔥 Live DJs, fire acts, aerial performers, sax & violin, and a rooftop energy like nowhere else. Step into 2025 with a party you’ll never forget! ✨🥂",
+    accent: "#e03c3c",
+    bg: "#120808",
   },
 ];
 
-const Events = () => {
+const PastEventCard = ({ event, index, onClick }) => {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <main>
-      <HeroSection image={eventsImg} title="Events" subtitle="Unforgettable Nights" />
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={() => onClick(event)}
+      className="relative cursor-pointer group"
+      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+    >
+      <div
+        className="relative overflow-hidden rounded-sm"
+        style={{
+          aspectRatio: "9/16",
+          maxHeight: "520px",
+          background: event.bg,
+          border: `1px solid ${event.accent}22`,
+          boxShadow: hovered
+            ? `0 20px 50px ${event.accent}20`
+            : "0 8px 32px rgba(0,0,0,0.5)",
+          transition: "all 0.6s ease",
+        }}
+      >
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.img
+            src={event.image}
+            className="w-full h-full object-cover"
+            style={{ filter: "grayscale(10%) brightness(0.6)" }}
+            animate={{ scale: hovered ? 1.05 : 1 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+        </div>
 
-      <section className="py-32 px-6">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
+        <div className="absolute top-0 left-0 right-0 p-5 flex justify-between">
+          <span
+            className="text-[9px] tracking-[0.3em] uppercase font-sans font-medium px-3 py-1 bg-black/40 backdrop-blur-md border border-white/10"
+            style={{ color: event.accent }}
           >
-            <p className="font-body text-[13px] tracking-[0.2em] uppercase text-primary/50 mb-6">
-              Upcoming
-            </p>
-            <h2 className="font-display text-4xl md:text-5xl text-primary">
-              What's Next
-            </h2>
-          </motion.div>
+            {event.category}
+          </span>
+        </div>
 
-          <div className="space-y-0">
-            {upcomingEvents.map((event, i) => (
-              <motion.div
+        <div className="absolute bottom-0 left-0 right-0 p-6">
+          <p className="text-[9px] tracking-[0.2em] uppercase mb-2 font-sans opacity-70">
+            {event.tag}
+          </p>
+          <h3
+            className="font-serif italic text-2xl mb-3 leading-tight"
+            style={{ color: event.accent }}
+          >
+            {event.title}
+          </h3>
+          <p className="text-[10px] tracking-widest uppercase font-sans text-white/40">
+            {event.date}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const PreviousEvents = ({ onSelectEvent }) => {
+  const scrollRef = useRef(null);
+  const scroll = (dir) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: dir * 350, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <section className="py-20 px-6 bg-[#0a0a0a]">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-end justify-between mb-12">
+          <motion.h2 className="text-4xl md:text-6xl font-serif italic text-white">
+            Upcoming Events
+          </motion.h2>
+          <div className="hidden md:flex gap-3">
+            {[ChevronLeft, ChevronRight].map((Icon, i) => (
+              <button
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="border-t border-border py-12 group"
+                onClick={() => scroll(i === 0 ? -1 : 1)}
+                className="w-12 h-12 flex items-center justify-center border border-white/10 text-white/40 hover:text-white transition-all"
               >
-                <h3 className="font-display text-2xl md:text-3xl text-primary mb-4 group-hover:opacity-70 transition-opacity">
-                  {event.title}
-                </h3>
-                <p className="font-body text-sm text-primary/60 mb-6 max-w-2xl">{event.desc}</p>
-                <div className="flex flex-wrap gap-8 text-[12px] tracking-[0.15em] uppercase text-primary/50 font-body">
-                  <span className="flex items-center gap-2">
-                    <Calendar size={14} /> {event.date}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Clock size={14} /> {event.time}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <MapPin size={14} /> {event.location}
-                  </span>
-                </div>
-              </motion.div>
+                <Icon size={18} />
+              </button>
             ))}
-            <div className="border-t border-border" />
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-32 px-6">
-        <div className="container mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-display text-3xl md:text-4xl text-primary mb-6">
-              Host Your Event With Us
-            </h2>
-            <p className="font-body text-primary/60 max-w-xl mx-auto mb-10">
-              From corporate galas to private celebrations, we create bespoke experiences tailored to your vision.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-3 border border-primary/40 text-primary px-10 py-4 font-body text-[13px] tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-all duration-500"
-            >
-              Get In Touch <ArrowRight size={16} />
-            </Link>
-          </motion.div>
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto pb-10 no-scrollbar"
+        >
+          {pastEvents.map((event, index) => (
+            <div key={event.id} className="flex-shrink-0 w-[280px]">
+              <PastEventCard
+                event={event}
+                index={index}
+                onClick={onSelectEvent}
+              />
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
+
+const Events = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  useEffect(() => {
+    document.body.style.overflow = selectedEvent ? "hidden" : "unset";
+  }, [selectedEvent]);
+
+  return (
+    <main className="bg-[#0a0a0a] text-white min-h-screen">
+      <HeroSection
+        image={eventsImg}
+        title="Events"
+        subtitle="The Art of Celebration"
+      />
+      <PreviousEvents onSelectEvent={setSelectedEvent} />
+
+      <AnimatePresence>
+        {selectedEvent && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedEvent(null)}
+              className="absolute inset-0 bg-black/90 backdrop-blur-md"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 10 }}
+              className="relative w-full max-w-4xl flex flex-col md:flex-row overflow-hidden bg-[#0d0d0d] border border-white/10 shadow-2xl rounded-sm"
+            >
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="absolute top-4 right-4 z-30 text-white/40 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Image : Plus petite et cadrée */}
+              <div className="w-full md:w-[45%] h-[30vh] md:h-auto overflow-hidden">
+                <img
+                  src={selectedEvent.image}
+                  className="w-full h-full object-cover"
+                  alt={selectedEvent.title}
+                />
+              </div>
+
+              {/* Contenu : Plus compact */}
+              <div className="w-full md:w-[55%] p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white/[0.02] to-transparent">
+                <p className="text-[9px] tracking-[0.3em] uppercase mb-3 font-sans text-amber-500/80">
+                  {selectedEvent.tag}
+                </p>
+
+                <h2 className="text-3xl md:text-4xl font-serif italic mb-5 text-white leading-tight">
+                  {selectedEvent.title}
+                </h2>
+
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 border-y border-white/5 py-4">
+                  <div className="flex items-center gap-2 text-white/50 font-sans text-[11px] tracking-wide">
+                    <Calendar size={14} className="text-amber-500/50" />
+                    <span>{selectedEvent.date}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/50 font-sans text-[11px] tracking-wide">
+                    <MapPin size={14} className="text-amber-500/50" />
+                    <span>{selectedEvent.location}</span>
+                  </div>
+                </div>
+
+                <p className="text-white/60 font-sans leading-relaxed text-xs mb-8">
+                  {selectedEvent.description}
+                </p>
+
+                <button
+                  onClick={() => setSelectedEvent(null)}
+                  className="w-fit py-3 px-8 border border-white/10 hover:bg-white hover:text-black transition-all duration-500 uppercase tracking-[0.2em] text-[9px] font-sans"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </main>
   );
 };

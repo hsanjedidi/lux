@@ -1,47 +1,35 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+
+// ─── Assets ──────────────────────────────────────────────────────────────────
 import aboutImg from "@/assets/about-hero.jpg";
+// Note: Remplacez par le chemin réel de la photo du directeur
+// import mdPhoto from "@/assets/md-photo.jpg";
+import logoPartner1 from "@/assets/sp.png";
+import logoPartner2 from "@/assets/sp1.png";
+import logoPartner3 from "@/assets/sp2.png";
+import logoPartner4 from "@/assets/sp3.png";
+import logoPartner5 from "@/assets/sp4.png";
+import logoPartner6 from "@/assets/sp5.png";
+import logoPartner7 from "@/assets/sp6.png";
+import logoPartner8 from "@/assets/sp7.png";
 
 // ─── Design Tokens ─────────────────────────────────────────────────────────────
 const gold = "#C9A96E";
-const goldLight = "#E8D5A3";
-const goldDim = "rgba(201,169,110,0.12)";
 const dark = "#0C0A08";
 const darkMid = "#141210";
 const cream = "#F5F0E8";
 
-// ─── Team Data ─────────────────────────────────────────────────────────────────
-const teamMembers = [
-  {
-    name: "Mohamed Khalid AlMuharraqi",
-    role: "Co-Founder – Managing Director",
-    bio: "Over 12 years in the entertainment industry. Under his leadership, Luxuria achieved remarkable growth, establishing Volto as the highest footfall restaurant & lounge in Bahrain. Winner of Fact Dining Awards 2025.",
-  },
-  {
-    name: "Elias Fernandes",
-    role: "General Manager",
-    bio: "Over 24 years of extensive operational experience. Oversees day-to-day administration, vendor management, HR operations, procurement, and overall financial management.",
-  },
-  {
-    name: "Saad Al Romaihi",
-    role: "Operations Manager",
-    bio: "Over 15 years of hospitality experience across prominent destinations in Bahrain. Expert in team leadership, guest experience, and operational control.",
-  },
-  {
-    name: "Andy Zyla",
-    role: "Group Executive Chef",
-    bio: "Over 25 years of culinary leadership across the UK, Maldives, UAE, Saudi Arabia, and Bahrain. Previously at The Ritz-Carlton, Soneva Fushi, and Golf Saudi.",
-  },
-  {
-    name: "Mohamed Loumrhari",
-    role: "Floor Manager",
-    bio: "Over a decade of hospitality experience in fine dining and luxury hotels across the GCC. Fluent in Arabic, English, and French.",
-  },
-  {
-    name: "Andrei Bodrug",
-    role: "Bar Manager",
-    bio: "15 years in the hospitality industry. Known for reinterpreting classic techniques into refined, modern experiences. Recognized competitor in bar competitions.",
-  },
+// ─── Data ──────────────────────────────────────────────────────────────────────
+const sponsors = [
+  { name: "Partner 1", logo: logoPartner1 },
+  { name: "Partner 2", logo: logoPartner2 },
+  { name: "Partner 3", logo: logoPartner3 },
+  { name: "Partner 4", logo: logoPartner4 },
+  { name: "Partner 5", logo: logoPartner5 },
+  { name: "Partner 6", logo: logoPartner6 },
+  { name: "Partner 7", logo: logoPartner7 },
+  { name: "Partner 8", logo: logoPartner8 },
 ];
 
 // ─── Shared Components ─────────────────────────────────────────────────────────
@@ -71,7 +59,7 @@ const GoldDivider = () => (
 const Eyebrow = ({ children }) => (
   <p
     style={{
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
+      fontFamily: "'Cormorant Garamond', serif",
       fontSize: "11px",
       letterSpacing: "0.35em",
       textTransform: "uppercase",
@@ -136,31 +124,110 @@ const WatermarkNumber = ({ number }) => (
   </div>
 );
 
-// ─── Font Injection ─────────────────────────────────────────────────────────────
+const SponsorBand = () => {
+  return (
+    <section
+      style={{
+        padding: "100px 0",
+        background: cream,
+        borderTop: `1px solid rgba(201,169,110,0.1)`,
+        borderBottom: `1px solid rgba(201,169,110,0.1)`,
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ marginBottom: "50px", textAlign: "center" }}>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          style={{
+            fontFamily: "'Jost', sans-serif",
+            fontSize: "10px",
+            letterSpacing: "0.5em",
+            textTransform: "uppercase",
+            color: gold,
+            opacity: 0.6,
+          }}
+        >
+          Our Partners & Collaborators
+        </motion.p>
+      </div>
+      <div
+        style={{ display: "flex", overflow: "hidden", position: "relative" }}
+      >
+        <motion.div
+          style={{
+            display: "flex",
+            gap: "6rem",
+            whiteSpace: "nowrap",
+            willChange: "transform",
+          }}
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+        >
+          {[...sponsors, ...sponsors].map((sponsor, index) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: "160px",
+              }}
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                style={{
+                  height: "55px",
+                  width: "auto",
+                  objectFit: "contain",
+                  opacity: 0.4,
+                  filter: "grayscale(100%) brightness(120%)",
+                  transition: "all 0.6s ease",
+                  cursor: "pointer",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                  e.currentTarget.style.filter =
+                    "grayscale(0%) brightness(100%)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.opacity = "0.4";
+                  e.currentTarget.style.filter =
+                    "grayscale(100%) brightness(120%)";
+                }}
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const FontStyle = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap');
+    body { margin: 0; background: ${dark}; }
   `}</style>
 );
 
-// ─── About Page ─────────────────────────────────────────────────────────────────
+// ─── About Page Component ──────────────────────────────────────────────────────
 const About = () => {
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  // Parallax: image moves slightly as you scroll down
-  const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
-  // Fade out the title as you scroll
+
+  const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "25%"]);
   const heroTitleOpacity = useTransform(heroScroll, [0, 0.5], [1, 0]);
-  const heroTitleY = useTransform(heroScroll, [0, 0.5], ["0%", "-20%"]);
 
   return (
-    <main style={{ background: dark }}>
+    <main style={{ background: dark, color: cream }}>
       <FontStyle />
 
-      {/* ── Full-Screen Hero ─────────────────────────────────────────────────── */}
+      {/* ── HERO SECTION ── */}
       <section
         ref={heroRef}
         style={{
@@ -170,48 +237,22 @@ const About = () => {
           overflow: "hidden",
         }}
       >
-        {/* Parallax image */}
         <motion.div
-          style={{
-            position: "absolute",
-            inset: "-10% 0",
-            y: heroImgY,
-          }}
+          style={{ position: "absolute", inset: "-10% 0", y: heroImgY }}
         >
           <img
             src={aboutImg}
-            alt="About Us"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center top",
-              display: "block",
-            }}
+            alt="Hero"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </motion.div>
-
-        {/* Dark gradient overlay — stronger at bottom for text legibility */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to bottom, rgba(12,10,8,0.35) 0%, rgba(12,10,8,0.25) 40%, rgba(12,10,8,0.65) 80%, rgba(12,10,8,0.92) 100%)",
+            background: `linear-gradient(to bottom, rgba(12,10,8,0.3), ${dark})`,
           }}
         />
-
-        {/* Subtle vignette */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at center, transparent 40%, rgba(12,10,8,0.55) 100%)",
-          }}
-        />
-
-        {/* Centered title */}
         <motion.div
           style={{
             position: "absolute",
@@ -221,64 +262,16 @@ const About = () => {
             alignItems: "center",
             justifyContent: "center",
             opacity: heroTitleOpacity,
-            y: heroTitleY,
           }}
         >
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
+          <Eyebrow>Luxuria Hospitality</Eyebrow>
+          <GoldDivider />
+          <h1
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "11px",
-              letterSpacing: "0.4em",
-              textTransform: "uppercase",
-              color: gold,
-              marginBottom: "1rem",
-            }}
-          >
-            Luxuria Hospitality
-          </motion.p>
-
-          {/* Decorative line */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              marginBottom: "1.5rem",
-            }}
-          >
-            <div style={{ width: 60, height: 1, background: gold, opacity: 0.5 }} />
-            <div
-              style={{
-                width: 5,
-                height: 5,
-                borderRadius: "50%",
-                background: gold,
-                opacity: 0.7,
-              }}
-            />
-            <div style={{ width: 60, height: 1, background: gold, opacity: 0.5 }} />
-          </motion.div>
-
-          {/* Main title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(56px, 9vw, 110px)",
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(50px, 8vw, 100px)",
               fontWeight: 300,
-              color: cream,
-              letterSpacing: "0.04em",
               textAlign: "center",
-              lineHeight: 1,
               margin: 0,
             }}
           >
@@ -286,639 +279,455 @@ const About = () => {
             <em style={{ fontStyle: "italic", color: gold, fontWeight: 400 }}>
               Us
             </em>
-          </motion.h1>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          style={{
-            position: "absolute",
-            bottom: "2.5rem",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "9px",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: gold,
-              opacity: 0.6,
-            }}
-          >
-            Scroll
-          </p>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-            style={{
-              width: 1,
-              height: 36,
-              background: `linear-gradient(to bottom, ${gold}, transparent)`,
-              opacity: 0.5,
-            }}
-          />
+          </h1>
         </motion.div>
       </section>
 
-      {/* ── Section: Our Story (About Us) ───────────────────────────────────── */}
+      {/* ── SECTION: OUR STORY ── */}
       <section
         style={{
           background: darkMid,
-          padding: "140px 24px",
+          padding: "160px 24px",
           position: "relative",
           overflow: "hidden",
-          borderBottom: `1px solid rgba(201,169,110,0.1)`,
         }}
       >
-        {/* Left glow */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "-8%",
-            transform: "translateY(-50%)",
-            width: 500,
-            height: 500,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%)`,
-            pointerEvents: "none",
-          }}
-        />
-        <CornerOrnament style={{ top: 36, left: 36 }} />
-        <CornerOrnament style={{ bottom: 36, right: 36 }} />
-
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-
-          {/* ── Header ── */}
+        <CornerOrnament style={{ top: 60, left: 60 }} />
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9 }}
-            style={{ marginBottom: "5rem" }}
-          >
-            <Eyebrow>Who We Are</Eyebrow>
-            <GoldDivider />
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(42px, 5.5vw, 68px)",
-                fontWeight: 300,
-                color: cream,
-                lineHeight: 1.1,
-                letterSpacing: "-0.01em",
-                marginTop: "0.5rem",
-                maxWidth: 700,
-              }}
-            >
-              The{" "}
-              <em style={{ fontStyle: "italic", color: gold, fontWeight: 400 }}>
-                Luxuria
-              </em>{" "}
-              Story
-            </h2>
-          </motion.div>
-
-          {/* ── Body: two-column layout ── */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-              gap: "5rem",
-              alignItems: "start",
-            }}
-          >
-            {/* Left column */}
-            <div>
-              {[
-                {
-                  label: "Our Foundation",
-                  text: "Luxuria Hospitality Management is a passionate and ambitious organization driven by vision, creativity, and strategic decision-making. With over 25 years of experience in the entertainment industry and more than 15 years across hospitality and lifestyle sectors—including hotels, beach clubs, restaurants, lounges, concerts, and corporate events—we deliver strong industry expertise and operational excellence across every venture.",
-                },
-                {
-                  label: "Our Origins",
-                  text: "Originally established as DJ Jackson Productions by Abdulla AlMuharraqi, the company rebranded in 2020 to Luxuria Hospitality Management to reflect its expanded focus and long-term vision within the hospitality and lifestyle industry, led by his brother Mohamed AlMuharraqi as Co-Founder and Managing Director.",
-                },
-              ].map((block, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.15 }}
-                  style={{ marginBottom: "3rem" }}
-                >
-                  <p
-                    style={{
-                      fontFamily: "'Jost', sans-serif",
-                      fontSize: "9px",
-                      letterSpacing: "0.3em",
-                      textTransform: "uppercase",
-                      color: gold,
-                      opacity: 0.75,
-                      marginBottom: "0.75rem",
-                    }}
-                  >
-                    {block.label}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "'Jost', 'Helvetica Neue', sans-serif",
-                      fontSize: "15px",
-                      lineHeight: 1.9,
-                      color: "rgba(245,240,232,0.62)",
-                      fontWeight: 300,
-                    }}
-                  >
-                    {block.text}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Right column */}
-            <div>
-              {[
-                {
-                  label: "Global Reach",
-                  text: "Our portfolio includes collaborations with more than 15 international brands and over 20 global artists, both in Bahrain and internationally.",
-                },
-                {
-                  label: "Volto Restaurant",
-                  text: "In 2022, we established Volto Restaurant in Manama Block 338. The concept was originally developed in 2019, when founder Mohamed AlMuharraqi and his brothers transformed their passion for food and beverage into a refined dining destination. Their vision was to create authentic culinary experiences that connect people and celebrate exceptional cuisine.",
-                },
-                {
-                  label: "Today",
-                  text: "With over 100 employees across Luxuria Hospitality Management and Volto Restaurant, that vision has grown into a recognized brand across the GCC in under a year. Our commitment to innovative design, exceptional service, and memorable guest experiences continues to drive sustainable growth and long-term success.",
-                },
-              ].map((block, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.1 + i * 0.15 }}
-                  style={{ marginBottom: "3rem" }}
-                >
-                  <p
-                    style={{
-                      fontFamily: "'Jost', sans-serif",
-                      fontSize: "9px",
-                      letterSpacing: "0.3em",
-                      textTransform: "uppercase",
-                      color: gold,
-                      opacity: 0.75,
-                      marginBottom: "0.75rem",
-                    }}
-                  >
-                    {block.label}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "'Jost', 'Helvetica Neue', sans-serif",
-                      fontSize: "15px",
-                      lineHeight: 1.9,
-                      color: "rgba(245,240,232,0.62)",
-                      fontWeight: 300,
-                    }}
-                  >
-                    {block.text}
-                  </p>
-                </motion.div>
-              ))}
-
-              {/* Stats row */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                style={{
-                  display: "flex",
-                  gap: "2.5rem",
-                  paddingTop: "2rem",
-                  borderTop: `1px solid rgba(201,169,110,0.15)`,
-                  flexWrap: "wrap",
-                }}
-              >
-                {[
-                  { value: "25+", label: "Years Experience" },
-                  { value: "15+", label: "International Brands" },
-                  { value: "100+", label: "Employees" },
-                  { value: "20+", label: "Global Artists" },
-                ].map((stat, i) => (
-                  <div key={i} style={{ minWidth: 90 }}>
-                    <p
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: "clamp(32px, 4vw, 44px)",
-                        fontWeight: 300,
-                        color: gold,
-                        lineHeight: 1,
-                        marginBottom: "0.35rem",
-                      }}
-                    >
-                      {stat.value}
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "'Jost', sans-serif",
-                        fontSize: "9px",
-                        letterSpacing: "0.25em",
-                        textTransform: "uppercase",
-                        color: "rgba(245,240,232,0.45)",
-                      }}
-                    >
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 1: Mission & Commitment ─────────────────────────────────── */}
-      <section
-        style={{
-          background: dark,
-          padding: "120px 24px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <CornerOrnament style={{ top: 36, left: 36 }} />
-        <CornerOrnament style={{ bottom: 36, right: 36 }} />
-        <WatermarkNumber number="01" />
-
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "80px",
-              alignItems: "start",
-            }}
-          >
-            {/* Left */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <Eyebrow>Our Story</Eyebrow>
-              <GoldDivider />
-              <h2
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(40px, 5vw, 62px)",
-                  fontWeight: 300,
-                  color: cream,
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.01em",
-                  marginTop: "0.5rem",
-                }}
-              >
-                Mission &{" "}
-                <em
-                  style={{ fontStyle: "italic", color: gold, fontWeight: 400 }}
-                >
-                  Commitment
-                </em>
-              </h2>
-            </motion.div>
-
-            {/* Right */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.9,
-                delay: 0.2,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "'Jost', 'Helvetica Neue', sans-serif",
-                  fontSize: "15px",
-                  lineHeight: 1.9,
-                  color: "rgba(245,240,232,0.6)",
-                  marginBottom: "1.75rem",
-                  fontWeight: 300,
-                }}
-              >
-                Luxuria Hospitality Management is dedicated to developing and
-                managing distinctive hospitality concepts that deliver
-                exceptional and memorable experiences. Our portfolio is united
-                by a shared commitment to innovation, operational excellence,
-                and refined guest engagement.
-              </p>
-              <p
-                style={{
-                  fontFamily: "'Jost', 'Helvetica Neue', sans-serif",
-                  fontSize: "15px",
-                  lineHeight: 1.9,
-                  color: "rgba(245,240,232,0.6)",
-                  fontWeight: 300,
-                }}
-              >
-                Driven by visionary leadership and a passion for creativity, we
-                transform bold ideas into world-class hospitality destinations.
-                Our dedication to superior standards in service, quality, and
-                design extends beyond guest satisfaction — it shapes a dynamic
-                work culture that fosters professional growth, empowers talent,
-                and generates sustainable value for our stakeholders.
-              </p>
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                style={{
-                  height: 1,
-                  background: `linear-gradient(90deg, ${gold}, transparent)`,
-                  marginTop: "2.5rem",
-                  transformOrigin: "left",
-                }}
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 2: Vision & Excellence ──────────────────────────────────── */}
-      <section
-        style={{
-          background: darkMid,
-          padding: "120px 24px",
-          position: "relative",
-          overflow: "hidden",
-          borderTop: `1px solid rgba(201,169,110,0.1)`,
-          borderBottom: `1px solid rgba(201,169,110,0.1)`,
-        }}
-      >
-        {/* Gold radial glow */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            right: "-10%",
-            transform: "translateY(-50%)",
-            width: 600,
-            height: 600,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(201,169,110,0.055) 0%, transparent 70%)`,
-            pointerEvents: "none",
-          }}
-        />
-        <WatermarkNumber number="02" />
-
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "80px",
-              alignItems: "start",
-            }}
-          >
-            {/* Left */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <Eyebrow>Our Story</Eyebrow>
-              <GoldDivider />
-              <h2
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(40px, 5vw, 62px)",
-                  fontWeight: 300,
-                  color: cream,
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.01em",
-                  marginTop: "0.5rem",
-                }}
-              >
-                Vision &{" "}
-                <em
-                  style={{ fontStyle: "italic", color: gold, fontWeight: 400 }}
-                >
-                  Excellence
-                </em>
-              </h2>
-            </motion.div>
-
-            {/* Right */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.9,
-                delay: 0.2,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-            >
-              {[
-                "Our vision is to position Luxuria Hospitality Management as a leading hospitality group in the Kingdom of Bahrain and beyond, setting new benchmarks in quality, service excellence, and experiential luxury.",
-                "We combine strategic insight and data-driven hospitality management with innovation, collaboration, and customer-centric excellence. By continuously elevating standards, we aim to enhance Bahrain's global reputation as a premium tourism and lifestyle destination.",
-                "In the coming years, Luxuria Hospitality Management seeks to expand regionally into key markets such as Riyadh and Dubai, with long-term ambitions of entering prominent European destinations, establishing Luxuria as an internationally recognized hospitality brand.",
-              ].map((text, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.3 + i * 0.15 }}
-                  style={{
-                    fontFamily: "'Jost', 'Helvetica Neue', sans-serif",
-                    fontSize: "15px",
-                    lineHeight: 1.9,
-                    color: "rgba(245,240,232,0.6)",
-                    marginBottom: "1.75rem",
-                    fontWeight: 300,
-                  }}
-                >
-                  {text}
-                </motion.p>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Team ─────────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          background: dark,
-          padding: "120px 24px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <CornerOrnament style={{ top: 36, right: 36 }} />
-
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            style={{ textAlign: "center", marginBottom: "5rem" }}
           >
-            <Eyebrow>Leadership</Eyebrow>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "0.5rem 0 1.5rem",
-              }}
-            >
-              <GoldDivider />
-            </div>
+            <Eyebrow>Who We Are</Eyebrow>
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(40px, 5vw, 60px)",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(40px, 6vw, 72px)",
                 fontWeight: 300,
                 color: cream,
+                marginBottom: "2rem",
                 lineHeight: 1.1,
               }}
             >
-              Meet Our{" "}
-              <em style={{ fontStyle: "italic", color: gold, fontWeight: 400 }}>
-                Team
+              The{" "}
+              <span style={{ color: gold, fontStyle: "italic" }}>Luxuria</span>{" "}
+              Story
+            </h2>
+            <p
+              style={{
+                fontFamily: "'Jost', sans-serif",
+                fontSize: "clamp(18px, 2vw, 22px)",
+                lineHeight: 1.6,
+                color: gold,
+                fontWeight: 300,
+                maxWidth: "800px",
+                marginBottom: "5rem",
+                opacity: 0.9,
+              }}
+            >
+              Luxuria Hospitality Management is a passionate and ambitious
+              organization driven by vision, creativity, and strategic
+              decision-making.
+            </p>
+          </motion.div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "80px 100px",
+              alignItems: "start",
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div
+                style={{
+                  width: "30px",
+                  height: "1px",
+                  background: gold,
+                  marginBottom: "20px",
+                }}
+              />
+              <p
+                style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: "15px",
+                  lineHeight: 1.8,
+                  color: "rgba(245,240,232,0.7)",
+                  fontWeight: 300,
+                }}
+              >
+                With over 25 years of experience in the entertainment industry
+                and more than 15 years across hospitality and lifestyle
+                sectors—including hotels, beach clubs, and corporate events—we
+                deliver strong industry expertise.
+                <br />
+                <br />
+                Originally established as{" "}
+                <strong>DJ Jackson Productions</strong> by Abdulla AlMuharraqi,
+                the company rebranded in 2020 to reflect its expanded focus,
+                lead by Mohamed AlMuharraqi as co-founder and managing director.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div
+                style={{
+                  width: "30px",
+                  height: "1px",
+                  background: gold,
+                  marginBottom: "20px",
+                }}
+              />
+              <p
+                style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: "15px",
+                  lineHeight: 1.8,
+                  color: "rgba(245,240,232,0.7)",
+                  fontWeight: 300,
+                }}
+              >
+                In 2022, we established <strong>Volto Restaurant</strong> in
+                Manama Block 338. A vision transformed into a refined dining
+                destination that celebrates exceptional cuisine and connects
+                people through authentic experiences.
+                <br />
+                <br />
+                Today, with over 100 employees, the vision has grown into a
+                recognized brand across the GCC in under a year, driven by our
+                commitment to innovative design and memorable guest experiences.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── BANDE SPONSORS ANIMÉE ── */}
+      <SponsorBand />
+
+      {/* ── SECTION: MANAGING DIRECTOR'S MESSAGE ── */}
+      <section
+        style={{
+          padding: "160px 24px",
+          background: dark,
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+            gap: "80px",
+            alignItems: "center",
+          }}
+        >
+          {/* Côté Gauche : Photo avec bordures décoratives */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            style={{ position: "relative", padding: "15px" }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100px",
+                height: "100px",
+                borderLeft: `1px solid ${gold}`,
+                borderTop: `1px solid ${gold}`,
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                width: "100px",
+                height: "100px",
+                borderRight: `1px solid ${gold}`,
+                borderBottom: `1px solid ${gold}`,
+              }}
+            />
+            <div
+              style={{
+                width: "100%",
+                height: "550px",
+                background: "#1a1a1a",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Image Placeholder - à remplacer par {mdPhoto} */}
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "linear-gradient(45deg, #0C0A08, #1a1a1a)",
+                }}
+              >
+                <span
+                  style={{
+                    color: gold,
+                    opacity: 0.5,
+                    fontFamily: "'Cormorant Garamond', serif",
+                  }}
+                >
+                  Managing Director Photo
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Côté Droit : Le Message */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Eyebrow>Leadership Message</Eyebrow>
+            <h2
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 300,
+                color: cream,
+                marginBottom: "2.5rem",
+                lineHeight: 1.2,
+              }}
+            >
+              A Word from our <br />
+              <em style={{ color: gold }}>Managing Director</em>
+            </h2>
+
+            <div style={{ position: "relative" }}>
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-40px",
+                  left: "-20px",
+                  fontSize: "120px",
+                  color: gold,
+                  opacity: 0.1,
+                  fontFamily: "'Cormorant Garamond', serif",
+                  pointerEvents: "none",
+                }}
+              >
+                “
+              </span>
+              <p
+                style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: "17px",
+                  lineHeight: "1.9",
+                  color: "rgba(245,240,232,0.8)",
+                  fontWeight: 300,
+                  marginBottom: "2rem",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                At Luxuria Hospitality Management, we don't just manage venues;
+                we curate emotions and lasting memories. Our journey is fueled
+                by a relentless pursuit of excellence and a deep-rooted passion
+                for redefining the art of service in the GCC region.
+                <br />
+                <br />
+                We believe that every detail matters, and it is this meticulous
+                attention to the 'small things' that allows us to create
+                world-class experiences that resonate with our guests long after
+                they leave.
+              </p>
+            </div>
+
+            <div
+              style={{
+                marginTop: "3rem",
+                borderTop: "1px solid rgba(201,169,110,0.2)",
+                paddingTop: "2rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "26px",
+                  color: gold,
+                  marginBottom: "0.2rem",
+                  fontStyle: "italic",
+                }}
+              >
+                Mohamed AlMuharraqi
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: "11px",
+                  letterSpacing: "0.3em",
+                  textTransform: "uppercase",
+                  color: "rgba(245,240,232,0.5)",
+                }}
+              >
+                Co-Founder & Managing Director
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION: MISSION ── */}
+      <section
+        style={{
+          padding: "160px 24px",
+          position: "relative",
+          background: darkMid,
+          overflow: "hidden",
+        }}
+      >
+        <WatermarkNumber number="01" />
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "1fr 1.2fr",
+            gap: "100px",
+            alignItems: "center",
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Eyebrow>Our Purpose</Eyebrow>
+            <div style={{ margin: "24px 0" }}>
+              <div style={{ width: "60px", height: "2px", background: gold }} />
+            </div>
+            <h2
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(40px, 4vw, 56px)",
+                fontWeight: 300,
+                lineHeight: 1.1,
+                color: cream,
+              }}
+            >
+              Mission & <br />
+              <em style={{ color: gold, fontStyle: "italic", fontWeight: 400 }}>
+                Commitment
               </em>
             </h2>
           </motion.div>
 
-          {/* Grid */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "0",
+              fontFamily: "'Jost', sans-serif",
+              fontSize: "17px",
+              lineHeight: 1.9,
+              color: "rgba(245,240,232,0.8)",
+              fontWeight: 300,
+              position: "relative",
+              paddingLeft: "40px",
+              borderLeft: "1px solid rgba(201,169,110,0.2)",
             }}
           >
-            {teamMembers.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                style={{
-                  borderTop: `1px solid rgba(201,169,110,0.15)`,
-                  borderLeft:
-                    i % 2 === 1 ? `1px solid rgba(201,169,110,0.08)` : "none",
-                  padding: "2.5rem 2rem",
-                  position: "relative",
-                  transition: "background 0.3s ease",
-                }}
-                whileHover={{
-                  backgroundColor: "rgba(201,169,110,0.04)",
-                }}
-              >
-                {/* Index number */}
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "2rem",
-                    right: "2rem",
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "11px",
-                    letterSpacing: "0.15em",
-                    color: gold,
-                    opacity: 0.4,
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+            <p style={{ marginBottom: "2rem", color: cream, fontSize: "19px" }}>
+              Luxuria Hospitality Management is dedicated to developing and
+              managing distinctive hospitality concepts that deliver{" "}
+              <strong>exceptional and memorable experiences</strong>.
+            </p>
+            <p style={{ marginBottom: "1.5rem" }}>
+              Driven by visionary leadership and a passion for creativity, we
+              transform bold ideas into world-class hospitality destinations.
+              Our portfolio is united by a shared commitment to innovation,
+              operational excellence, and refined guest engagement.
+            </p>
+            <p
+              style={{
+                fontSize: "15px",
+                color: "rgba(245,240,232,0.5)",
+                fontStyle: "italic",
+              }}
+            >
+              Our dedication extends beyond guest satisfaction — it shapes a
+              dynamic work culture that fosters professional growth and
+              generates sustainable value for our stakeholders.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-                <h3
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: "22px",
-                    fontWeight: 400,
-                    color: cream,
-                    marginBottom: "0.4rem",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {member.name}
-                </h3>
-
-                <p
-                  style={{
-                    fontFamily: "'Jost', sans-serif",
-                    fontSize: "10px",
-                    letterSpacing: "0.25em",
-                    textTransform: "uppercase",
-                    color: gold,
-                    marginBottom: "1.25rem",
-                    opacity: 0.85,
-                  }}
-                >
-                  {member.role}
-                </p>
-
-                {/* Gold accent line */}
-                <div
-                  style={{
-                    height: 1,
-                    width: 32,
-                    background: gold,
-                    opacity: 0.4,
-                    marginBottom: "1.25rem",
-                  }}
-                />
-
-                <p
-                  style={{
-                    fontFamily: "'Jost', sans-serif",
-                    fontSize: "13.5px",
-                    lineHeight: 1.8,
-                    color: "rgba(245,240,232,0.5)",
-                    fontWeight: 300,
-                  }}
-                >
-                  {member.bio}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom border */}
+      {/* ── SECTION: VISION ── */}
+      <section
+        style={{
+          padding: "120px 24px",
+          position: "relative",
+          background: dark,
+        }}
+      >
+        <WatermarkNumber number="02" />
+        <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
           <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{
-              height: 1,
-              background: `rgba(201,169,110,0.15)`,
-              marginTop: 0,
-              transformOrigin: "left",
-            }}
-          />
+          >
+            <Eyebrow>The Future</Eyebrow>
+            <h2
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "45px",
+                fontWeight: 300,
+                marginBottom: "2rem",
+              }}
+            >
+              Vision & <em style={{ color: gold }}>Excellence</em>
+            </h2>
+            <p
+              style={{
+                maxWidth: "800px",
+                margin: "0 auto",
+                fontFamily: "'Jost', sans-serif",
+                fontSize: "16px",
+                lineHeight: 1.9,
+                color: "rgba(245,240,232,0.6)",
+              }}
+            >
+              Our vision is to position Luxuria Hospitality Management as a
+              leading hospitality group in the Kingdom of Bahrain and beyond,
+              setting new benchmarks in quality, service excellence, and
+              experiential luxury. We combine strategic insight and data-driven
+              hospitality management with innovation, collaboration, and
+              customer-centric excellence. By continuously elevating standards,
+              we aim to enhance Bahrain’s global reputation as a premium tourism
+              and lifestyle destination.
+            </p>
+          </motion.div>
         </div>
       </section>
     </main>
