@@ -9,6 +9,8 @@ const navItems = [
   { label: "Menu", path: "/menu" },
   { label: "Events", path: "/events" },
   { label: "Contact", path: "/contact" },
+  { label: "Hospitality Management", path: "/hospitality-management" },
+  { label: "Excellence Training", path: "/excellence-training" },
 ];
 
 const Navbar = () => {
@@ -24,11 +26,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-8 py-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
@@ -41,11 +42,10 @@ const Navbar = () => {
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`font-body text-[13px] tracking-[0.2em] uppercase transition-opacity duration-300 hover:opacity-60 ${
-                  location.pathname === item.path
+                className={`font-body text-[13px] tracking-[0.2em] uppercase transition-opacity duration-300 hover:opacity-60 ${location.pathname === item.path
                     ? "text-primary"
                     : "text-primary"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
