@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import axios from "axios";
 
 // --- Design Tokens ---
 const gold = "#C9A96E";
@@ -15,10 +16,38 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Thank you for your message. We will get back to you shortly.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+
+    const payload = {
+      sender: {
+        name: "Luxuria Bot",
+        email: "no-reply@luxuriabahrain.com",
+      },
+      to: [
+        {
+          email: "m.aziz.hlel@gmail.com",
+        },
+      ],
+      subject: "New Contact Form Submission",
+      textContent: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`,
+    };
+    try {
+      await sendEmail(payload);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      alert("Thank you for your message. We will get back to you shortly.");
+    } catch (error) {
+      alert("An error occurred while sending your message. Please try again.");
+    }
+  };
+  const sendEmail = async (payload: object) => {
+    await axios.post("https://api.brevo.com/v3/smtp/email", payload, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": import.meta.env.VITE_contactUsKey,
+      },
+    });
   };
 
   return (

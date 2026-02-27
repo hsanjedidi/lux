@@ -8,6 +8,8 @@ services:
       args:
         VITE_API_URL: http://localhost:3000
         VITE_NODE_ENV: production
+        VITE_carrersKey: ${VITE_carrersKey}
+        VITE_contactUsKey: ${VITE_contactUsKey}
 
     volumes:
       - ./proxy/Caddyfile:/etc/caddy/Caddyfile

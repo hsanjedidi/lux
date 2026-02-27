@@ -205,7 +205,7 @@ const About = () => {
           style={{ position: "absolute", inset: "-10% 0", y: heroImgY }}
         >
           <img
-            src={aboutImg}
+            src='/about/contact2.webp'
             alt="Hero"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
