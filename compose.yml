@@ -17,8 +17,15 @@ services:
       - luxuria-caddy-data:/data
       - luxuria-caddy-config:/config
 
+    networks:
+      - default
+
     restart: unless-stopped
 
 volumes:
   luxuria-caddy-data:
   luxuria-caddy-config:
+
+networks:
+  default:
+    name: luxuria-network
