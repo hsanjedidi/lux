@@ -1,6 +1,6 @@
 services:
   proxy:
-    container_name: luxuria-proxy
+    container_name: luxuria-reverse-proxy
 
     build:
       context: .
