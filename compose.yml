@@ -9,9 +9,6 @@ services:
         VITE_API_URL: http://localhost:3000
         VITE_NODE_ENV: production
 
-    ports:
-      - "80:80"
-      - "443:443"
     volumes:
       - ./proxy/Caddyfile:/etc/caddy/Caddyfile
       - luxuria-caddy-data:/data
