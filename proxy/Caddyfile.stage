@@ -1,0 +1,19 @@
+localhost:80 {
+    redir https://localhost:443{uri}
+}
+
+
+
+
+localhost:443 {
+    root * /srv/web
+    encode gzip
+    file_server
+    try_files {path} /index.html
+
+    log {
+		level ERROR
+        format console
+    }
+}
+
