@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import HospitalityManagement from "./pages/HospitalityManagement";
 import ExcellenceTraining from "./pages/ExcellenceTraining";
 import Carrers from "./pages/Carrers";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
