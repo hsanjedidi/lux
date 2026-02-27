@@ -15,7 +15,7 @@ const pastEvents = [
     time: "FROM 7PM TO 2:30AM",
     category: "SPECIAL",
     location: "Volto Restaurant & Lounge",
-    image: "/dystinct.webp",
+    image: "/Dystinct.webp",
     description:
       "Experience an exclusive evening of music, luxury, and high energy as DYSTINCT takes the stage in one of Bahrain’s most premium nightlife destinations. Known for his global hits and unique international sound, this special event promises an extraordinary atmosphere, premium vibes, and a world-class entertainment experience.",
     accent: "#c9a84c",
