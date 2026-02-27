@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
-import eventsImg from "@/assets/events-hero.jpg";
+import eventsImg from "@/assets/contact2.jpeg";
 import { Calendar, MapPin, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const pastEvents = [

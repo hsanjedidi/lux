@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "@/assets/log-Photoroom.png";
+import logo from "@/assets/log1.png";
 
 const navItems = [
   { label: "About", path: "/about" },
-    { label: "Hospitality Management", path: "/hospitality-management" },
+  { label: "Hospitality Management", path: "/hospitality-management" },
   { label: "Excellence Training", path: "/excellence-training" },
-  { label: "Events", path: "/events" },
-  { label: "Contact", path: "/contact" },
-
+   { label: "Events", path: "/events" },
+  { label: "Careers", path: "/careers" },
+   { label: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
@@ -26,10 +26,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border"
           : "bg-transparent"
-        }`}
+      }`}
     >
       <div className="container mx-auto px-8 py-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
@@ -42,10 +43,11 @@ const Navbar = () => {
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`font-body text-[13px] tracking-[0.2em] uppercase transition-opacity duration-300 hover:opacity-60 ${location.pathname === item.path
+                className={`font-body text-[13px] tracking-[0.2em] uppercase transition-opacity duration-300 hover:opacity-60 ${
+                  location.pathname === item.path
                     ? "text-primary"
                     : "text-primary"
-                  }`}
+                }`}
               >
                 {item.label}
               </Link>
@@ -84,7 +86,7 @@ const Navbar = () => {
                 <Link
                   to="/"
                   onClick={() => setIsOpen(false)}
-                  className="font-display text-3xl text-primary hover:opacity-60 transition-opacity"
+                  className="font-display text-2xl text-primary hover:opacity-60 transition-opacity"
                 >
                   Home
                 </Link>
@@ -94,7 +96,7 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => setIsOpen(false)}
-                    className="font-display text-3xl text-primary hover:opacity-60 transition-opacity"
+                    className="font-display text-2xl text-primary hover:opacity-60 transition-opacity"
                   >
                     {item.label}
                   </Link>

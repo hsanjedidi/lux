@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import MDPhoto from '@/assets/team-mohamed-khalid.jpg'; // Adaptez le chemin et l'extension
+import MDPhoto from "@/assets/team-mohamed-khalid.jpg"; // Adaptez le chemin et l'extension
 // ─── Assets ──────────────────────────────────────────────────────────────────
 import aboutImg from "@/assets/about-hero.jpg";
 // Note: Remplacez par le chemin réel de la photo du directeur
@@ -126,82 +126,46 @@ const WatermarkNumber = ({ number }) => (
 
 const SponsorBand = () => {
   return (
-    <section
-      style={{
-        padding: "100px 0",
-        background: cream,
-        borderTop: `1px solid rgba(201,169,110,0.1)`,
-        borderBottom: `1px solid rgba(201,169,110,0.1)`,
-        overflow: "hidden",
-      }}
-    >
-      <div style={{ marginBottom: "50px", textAlign: "center" }}>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          style={{
-            fontFamily: "'Jost', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.5em",
-            textTransform: "uppercase",
-            color: gold,
-            opacity: 0.6,
-          }}
-        >
-          Our Partners & Collaborators
-        </motion.p>
-      </div>
-      <div
-        style={{ display: "flex", overflow: "hidden", position: "relative" }}
-      >
-        <motion.div
-          style={{
-            display: "flex",
-            gap: "6rem",
-            whiteSpace: "nowrap",
-            willChange: "transform",
-          }}
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
-        >
-          {[...sponsors, ...sponsors].map((sponsor, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "160px",
-              }}
-            >
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                style={{
-                  height: "55px",
-                  width: "auto",
-                  objectFit: "contain",
-                  opacity: 0.4,
-                  filter: "grayscale(100%) brightness(120%)",
-                  transition: "all 0.6s ease",
-                  cursor: "pointer",
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                  e.currentTarget.style.filter =
-                    "grayscale(0%) brightness(100%)";
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.opacity = "0.4";
-                  e.currentTarget.style.filter =
-                    "grayscale(100%) brightness(120%)";
-                }}
-              />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+  <section className="py-20 border-y border-white/5 bg-white overflow-hidden">
+       <div className="mb-10 text-center">
+         <motion.p
+           initial={{ opacity: 0 }}
+           whileInView={{ opacity: 1 }}
+           className="text-5xl md:text-5xl font-light text-[#7A6A55] leading-none"
+                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+         >
+           Brand That Trust Us
+         </motion.p>
+       </div>
+ 
+       <div className="flex overflow-hidden relative">
+         {/* Optionnel : Dégradés sur les côtés pour masquer l'entrée/sortie proprement */}
+ 
+         <motion.div
+           className="flex space-x-16 md:space-x-24 whitespace-nowrap will-change-transform"
+           animate={{ x: ["0%", "-50%"] }}
+           transition={{
+             repeat: Infinity,
+             duration: 30,
+             ease: "linear",
+           }}
+           style={{ transformStyle: "preserve-3d" }} // Évite le flou sur certains navigateurs
+         >
+           {[...sponsors, ...sponsors].map((sponsor, index) => (
+             <div
+               key={index}
+               className="flex items-center justify-center min-w-[80px] md:min-w-[140px] transition-all duration-700"
+             >
+               <img
+                 src={sponsor.logo}
+                 alt={sponsor.name}
+                 // backface-visibility et transform-gpu empêchent le flou durant le mouvement
+               />
+             </div>
+           ))}
+         </motion.div>
+       </div>
+     </section>
   );
 };
 
@@ -475,29 +439,29 @@ const About = () => {
               }}
             >
               {/* Image Placeholder - à remplacer par {mdPhoto} */}
-         <div
-  style={{
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "linear-gradient(45deg, #0C0A08, #1a1a1a)",
-    overflow: "hidden", // Assure que l'image ne dépasse pas du cadre
-  }}
->
-  <img
-    src={MDPhoto}
-    alt="Managing Director"
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover", // Remplit le cadre sans déformer
-      opacity: 0.8,       // Optionnel : garde l'aspect sobre et élégant
-      display: "block"
-    }}
-  />
-</div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "linear-gradient(45deg, #0C0A08, #1a1a1a)",
+                  overflow: "hidden", // Assure que l'image ne dépasse pas du cadre
+                }}
+              >
+                <img
+                  src={MDPhoto}
+                  alt="Managing Director"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover", // Remplit le cadre sans déformer
+                    opacity: 0.8, // Optionnel : garde l'aspect sobre et élégant
+                    display: "block",
+                  }}
+                />
+              </div>
             </div>
           </motion.div>
 
@@ -550,16 +514,10 @@ const About = () => {
                   zIndex: 1,
                 }}
               >
-                At Luxuria Hospitality Management, we don't just manage venues;
-                we curate emotions and lasting memories. Our journey is fueled
-                by a relentless pursuit of excellence and a deep-rooted passion
-                for redefining the art of service in the GCC region.
+              As a proud Bahraini, I am committed to contributing to the Kingdom’s growth by introducing innovative projects and forward-thinking concepts that meet the highest international standards.
                 <br />
                 <br />
-                We believe that every detail matters, and it is this meticulous
-                attention to the 'small things' that allows us to create
-                world-class experiences that resonate with our guests long after
-                they leave.
+              My vision is to elevate Bahrain’s touristic restaurant and lounge sector by raising operational, creative, and experiential benchmarks to globally competitive levels. Through quality-driven development and strategic positioning, we aim to enhance the Kingdom’s appeal as a premium destination, attracting a wider international audience and delivering exceptional experiences to every visitor.
               </p>
             </div>
 
@@ -598,25 +556,26 @@ const About = () => {
       </section>
 
       {/* ── SECTION: MISSION ── */}
-      <section
-        style={{
-          padding: "160px 24px",
-          position: "relative",
-          background: darkMid,
-          overflow: "hidden",
-        }}
-      >
-        <WatermarkNumber number="01" />
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr 1.2fr",
-            gap: "100px",
-            alignItems: "center",
-          }}
-        >
+     {/* ── SECTION: MISSION ── */}
+<section
+  style={{
+    padding: "160px 24px",
+    position: "relative",
+    background: darkMid,
+    overflow: "hidden",
+  }}
+>
+  <WatermarkNumber number="01" />
+  <div
+    style={{
+      maxWidth: 1200,
+      margin: "0 auto",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", // ← changé
+      gap: "60px 100px", // ← gap vertical/horizontal séparé
+      alignItems: "center",
+    }}
+  >
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}

@@ -1,9 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroImg from "@/assets/background.jpg";
-import menuImg from "@/assets/cheese_board.jpeg";
-
-import sculptureImg from "@/assets/tikki_blaze.jpeg";
 
 // 👉 Imports Équipe
 import logoPartner1 from "@/assets/sp.png";
@@ -16,7 +13,6 @@ import logoPartner7 from "@/assets/sp6.png";
 import logoPartner8 from "@/assets/sp7.png";
 
 import TeamSection from "./TeamSection";
-import { V } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 
 // --- CONFIGURATION DES SPONSORS ---
 // Remplace les liens par tes logos réels dans /assets/
@@ -38,9 +34,10 @@ const SponsorBand = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="font-body text-[10px] tracking-[0.4em] uppercase text-primary/30"
+          className="text-5xl md:text-5xl font-light text-[#7A6A55] leading-none"
+                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
-          Our Partners & Collaborators
+          Brand That Trust Us
         </motion.p>
       </div>
 
@@ -60,17 +57,12 @@ const SponsorBand = () => {
           {[...sponsors, ...sponsors].map((sponsor, index) => (
             <div
               key={index}
-              className="flex items-center justify-center min-w-[120px] md:min-w-[180px] transition-all duration-700"
+              className="flex items-center justify-center min-w-[130px] md:min-w-[200px] transition-all duration-700"
             >
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
                 // backface-visibility et transform-gpu empêchent le flou durant le mouvement
-                className="h-8 md:h-20 w-auto object-contain opacity-40 hover:opacity-100 transition-opacity duration-500 transform-gpu"
-                style={{
-                  WebkitBackfaceVisibility: "hidden",
-                  backfaceVisibility: "hidden",
-                }}
               />
             </div>
           ))}
@@ -130,7 +122,6 @@ const Index = () => {
       </section>
 
       {/* Intro Statement */}
-     
 
       {/* BANDE SPONSORS - Positionnée stratégiquement avant l'équipe */}
 

@@ -1,157 +1,167 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// ─── Assets ──────────────────────────────────────────────────────────────────
-// Remplacez par vos chemins réels
-import voltoLogo from "@/assets/volto_login-Photoroom.png"; 
-import dish1 from "@/assets/copper_rush.jpeg";
-import dish2 from "@/assets/oscietra_caviar.jpeg";
-import dish3 from "@/assets/sour_burn.jpeg";
-import dish4 from "@/assets/volto_wagyu_sandwich.jpg";
-import dish5 from "@/assets/wagyu_striploin.jpg";
-import dish6 from "@/assets/popcorn_martini.jpeg";
-import dish7 from "@/assets/fin_de_claire_oysters_half_a_dozen.jpg";
-import dish8 from "@/assets/fruit_platter.jpeg";
-// ─── Design Tokens ─────────────────────────────────────────────────────────────
+// --- Assets ---
+import voltoLogo from "@/assets/logo&title.png"; 
+import dish1 from "@/assets/cooper.png";
+import dish2 from "@/assets/caviar.png";
+import dish3 from "@/assets/drink2.png";
+import dish4 from "@/assets/sawndwitch.png";
+
 const gold = "#C9A96E";
 const cream = "#F5F0E8";
 const darkMid = "#141210";
 
 const menuItems = [
-  { id: 1, img: dish1, title: "Copper Rush" },
-  { id: 2, img: dish2, title: "Oscietra Caviar" },
-  { id: 3, img: dish3, title: "Sour Burn" },
-  { id: 4, img: dish4, title: "Volto Wagyu Sandwich" },
-  { id: 5, img: dish5, title: "Wagyu Striploin" },
-  { id: 6, img: dish6, title: "Popcorn Martini" },
-  { id: 7, img: dish7, title: "Fin de Claire Oysters Half A Dozen" },
-  { id: 8, img: dish8, title: "Fruit Platter" },
+  { 
+    id: 1, 
+    img: dish1, 
+    title: "Copper Rush", 
+    desc: "A vibrant fusion of gin and Campari balanced with homemade grape syrup and fresh lemon juice, topped with sparkling blood orange soda. Bright, refreshing, and elegantly bittersweet, this cocktail delivers a bold citrus character with a smooth, sophisticated finish.",
+    allergy: "" 
+  },
+  { 
+    id: 2, 
+    img: dish2, 
+    title: "Oscietra Caviar", 
+    desc: "A refined selection of premium Oscietra caviar, served with traditional accompaniments including warm blinis, finely chopped shallots, capers, sour cream, fresh chives, and boiled egg. A timeless delicacy offering a perfect balance of texture, freshness, and sophisticated flavor.",
+    allergy: "Allergens: E | G | D" 
+  },
+  { 
+    id: 3, 
+    img: dish3, 
+    title: "Sour Burn", 
+    desc: "A bold and sophisticated blend of Jack Daniel’s No.7, double-burn caramel syrup, fresh lemon juice, and silky aquafaba, finished with a delicate red wine float. This cocktail delivers a perfect harmony of sweet and sour notes with layers of caramel richness and a subtle smoky finish.",
+    allergy: "" 
+  },
+  { 
+    id: 4, 
+    img: dish4, 
+    title: "Volto Wagyu Sandwich", 
+    desc: "Breaded Wagyu Tenderloin Grade 4/5 served in soft milk bread with our signature Volto 3.0 BBQ sauce, accompanied by a gourmet burger patty and crispy Parmesan fries. A refined balance of rich flavor, premium texture, and elevated comfort dining.",
+    allergy: "Allergens: G | D | SO | E" 
+  },
 ];
 
 const HospitalityManagement = () => {
   return (
-    <section style={{ background: darkMid, padding: "120px 24px", color: cream }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section style={{ background: darkMid, padding: "120px 24px", color: cream, overflow: "hidden" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         
-        {/* ── VOLTO BRAND HEADER ── */}
-        <div style={{ textAlign: "center", marginBottom: "80px" }}>
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "100px" }}>
           <motion.a 
             href="https://voltobahrain.com/" 
             target="_blank" 
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             style={{ display: "inline-block", textDecoration: "none" }}
           >
-            <img 
-              src={voltoLogo} 
-              alt="Volto Bahrain Logo" 
-              style={{ width: "320px", height: "auto", marginBottom: "20px", filter: "brightness(1.2)" }}
-            />
-            <p style={{ 
-              fontFamily: "'Jost', sans-serif", 
-              fontSize: "12px", 
-              letterSpacing: "0.4em", 
-              color: gold, 
-              textTransform: "uppercase",
-              marginTop: "10px"
-            }}>
-              Visit Official Website
+            <img src={voltoLogo} alt="Logo" style={{ width: "280px", marginBottom: "20px" }} />
+            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: "10px", letterSpacing: "0.5em", color: gold, textTransform: "uppercase" }}>
+              The Art of Hospitality
             </p>
           </motion.a>
         </div>
 
-        {/* ── FROM OUR MENU SECTION ── */}
-        <div style={{ marginBottom: "40px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          <div>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: gold, textTransform: "uppercase", letterSpacing: "0.2em" }}>
-              Culinary Excellence
-            </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 300, margin: "10px 0" }}>
-              From Our <em style={{ color: gold }}>Menu</em>
-            </h2>
-          </div>
-          <div style={{ width: "100px", height: "1px", background: gold, opacity: 0.3, marginBottom: "15px" }} />
+        {/* ── ALTERNATING SECTIONS ── */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
+          {menuItems.map((item, index) => {
+            const isEven = index % 2 === 1;
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ 
+                  display: "flex", 
+                  flexDirection: isEven ? "row-reverse" : "row", 
+                  alignItems: "center",
+                  gap: "60px",
+                  flexWrap: "wrap"
+                }}
+              >
+                {/* Image Side */}
+                <div style={{ flex: "1 1 450px", position: "relative" }}>
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ position: "relative", overflow: "hidden", borderRadius: "2px" }}
+                  >
+                    <img 
+                      src={item.img} 
+                      alt={item.title} 
+                      style={{ width: "100%", height: "550px", objectFit: "cover", display: "block" }} 
+                    />
+                  </motion.div>
+                </div>
+
+                {/* Text Side */}
+                <div style={{ flex: "1 1 350px", textAlign: "left" }}>
+                  <p style={{ 
+                    color: gold, 
+                    fontFamily: "'Jost', sans-serif", 
+                    fontSize: "12px", 
+                    letterSpacing: "0.3em", 
+                    marginBottom: "15px" 
+                  }}>
+                    0{index + 1} — SELECTION
+                  </p>
+                  
+                  <h3 style={{ 
+                    fontFamily: "'Cormorant Garamond', serif", 
+                    fontSize: "42px", 
+                    fontWeight: 300, 
+                    marginBottom: "25px",
+                    lineHeight: 1.1 
+                  }}>
+                    {item.title}
+                  </h3>
+                  
+                  <div style={{ 
+                    width: "40px", 
+                    height: "1px", 
+                    background: gold, 
+                    marginBottom: "25px" 
+                  }} />
+                  
+                  <p style={{ 
+                    fontFamily: "'Jost', sans-serif", 
+                    fontSize: "16px", 
+                    lineHeight: "1.8", 
+                    color: "rgba(245,240,232,0.7)",
+                    maxWidth: "400px",
+                    marginBottom: "20px"
+                  }}>
+                    {item.desc}
+                  </p>
+
+                  {/* ── ALLERGY SECTION ── */}
+                  <p style={{ 
+                    fontFamily: "'Jost', sans-serif", 
+                    fontSize: "11px", 
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
+                    color: gold, 
+                    opacity: 0.8,
+                    borderLeft: `1px solid ${gold}`,
+                    paddingLeft: "15px"
+                  }}>
+                    {item.allergy}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* ── MENU IMAGES GRID ── */}
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
-          gap: "24px" 
-        }}>
-          {menuItems.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              whileHover={{ y: -10 }}
-              style={{ position: "relative", cursor: "pointer", overflow: "hidden", aspectRatio: "4/5" }}
-            >
-              {/* Overlay Gradient */}
-              <div style={{ 
-                position: "absolute", 
-                inset: 0, 
-                background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8))", 
-                zIndex: 1 
-              }} />
-              
-              <img 
-                src={item.img} 
-                alt={item.title} 
-                style={{ 
-                  width: "100%", 
-                  height: "100%", 
-                  objectFit: "cover",
-                  transition: "transform 0.8s ease" 
-                }} 
-              />
-              
-              <div style={{ 
-                position: "absolute", 
-                bottom: "20px", 
-                left: "20px", 
-                zIndex: 2 
-              }}>
-                <p style={{ 
-                  fontFamily: "'Cormorant Garamond', serif", 
-                  fontSize: "20px", 
-                  fontStyle: "italic",
-                  color: cream 
-                }}>
-                  {item.title}
-                </p>
-              </div>
-
-              {/* Decorative Frame on Hover */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                style={{ 
-                  position: "absolute", 
-                  inset: "15px", 
-                  border: `1px solid ${gold}`, 
-                  zIndex: 3,
-                  pointerEvents: "none"
-                }} 
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        <div style={{ textAlign: "center", marginTop: "60px" }}>
-           <p style={{ 
-             fontFamily: "'Jost', sans-serif", 
-             fontSize: "14px", 
-             color: "rgba(245,240,232,0.5)", 
-             maxWidth: "600px", 
-             margin: "0 auto",
-             lineHeight: "1.8"
-           }}>
-             Experience the fusion of traditional flavors and modern culinary techniques at Volto, 
-             the heartbeat of Bahrain's Block 338.
+        {/* ── FOOTER ── */}
+        <div style={{ textAlign: "center", marginTop: "120px", borderTop: `1px solid rgba(201,169,110,0.2)`, paddingTop: "60px" }}>
+           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSize: "20px" }}>
+             "Where flavor meets the soul of Bahrain."
            </p>
         </div>
 

@@ -7,12 +7,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import MenuPage from "./pages/MenuPage";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import HospitalityManagement from "./pages/HospitalityManagement";
 import ExcellenceTraining from "./pages/ExcellenceTraining";
+import Carrers from "./pages/Carrers";
 
 const queryClient = new QueryClient();
 
@@ -26,11 +26,15 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
-          <Route path="/menu" element={<MenuPage />} />
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/hospitality-management" element={<HospitalityManagement />} />
+          <Route
+            path="/hospitality-management"
+            element={<HospitalityManagement />}
+          />
           <Route path="/excellence-training" element={<ExcellenceTraining />} />
+          <Route path="/careers" element={<Carrers />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
