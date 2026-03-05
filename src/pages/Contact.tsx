@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
 import axios from "axios";
 
-// --- Design Tokens ---
 const gold = "#C9A96E";
 const cream = "#F5F0E8";
 const dark = "#0C0A08";
@@ -15,45 +14,67 @@ const Contact = () => {
     phone: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const payload = {
-      sender: {
-        name: "Luxuria Bot",
-        email: "no-reply@luxuriabahrain.com",
-      },
-      to: [
-        {
-          email: "m.aziz.hlel@gmail.com",
-        },
-      ],
-      subject: "New Contact Form Submission",
-      textContent: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`,
-    };
+    setIsSubmitting(true);
     try {
-      await sendEmail(payload);
+      await axios.post(
+        "https://api.brevo.com/v3/smtp/email",
+        {
+          sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
+          to: [{ email: "m.aziz.hlel@gmail.com" }],
+          subject: "New Contact Form Submission",
+          htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> ${formData.name}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Phone:</strong> ${formData.phone}</p><p><strong>Message:</strong> ${formData.message}</p>`,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": import.meta.env.VITE_contactUsKey,
+          },
+        },
+      );
       setFormData({ name: "", email: "", phone: "", message: "" });
-      alert("Thank you for your message. We will get back to you shortly.");
+      alert("Thank you for your message.");
     } catch (error) {
-      alert("An error occurred while sending your message. Please try again.");
+      alert("An error occurred.");
+    } finally {
+      setIsSubmitting(false);
     }
-  };
-  const sendEmail = async (payload: object) => {
-    await axios.post("https://api.brevo.com/v3/smtp/email", payload, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": import.meta.env.VITE_contactUsKey,
-      },
-    });
   };
 
   return (
     <main style={{ background: dark, color: cream, minHeight: "100vh" }}>
+      {/* --- CSS POUR LE RESPONSIVE --- */}
+      <style>{`
+        .grid-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 100px;
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+        .form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        @media (max-width: 968px) {
+          .grid-container { 
+            grid-template-columns: 1fr; 
+            gap: 60px; 
+          }
+          .hero-section { padding: 120px 24px 60px 24px !important; }
+        }
+        @media (max-width: 640px) {
+          .form-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
+
       {/* ── HERO SECTION ── */}
       <section
+        className="hero-section"
         style={{ padding: "180px 24px 100px 24px", textAlign: "center" }}
       >
         <motion.div
@@ -76,7 +97,7 @@ const Contact = () => {
           <h1
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(48px, 8vw, 84px)",
+              fontSize: "clamp(40px, 8vw, 84px)",
               fontWeight: 300,
               lineHeight: 1,
             }}
@@ -94,16 +115,8 @@ const Contact = () => {
         </motion.div>
       </section>
 
-      <section style={{ padding: "0 24px 160px 24px" }}>
-        <div
-          style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "100px",
-          }}
-        >
+      <section style={{ padding: "0 24px 100px 24px" }}>
+        <div className="grid-container">
           {/* ── INFO SIDE ── */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -121,22 +134,18 @@ const Contact = () => {
             >
               Luxuria <br /> <span style={{ color: gold }}>Headquarters</span>
             </h3>
-
             <div
               style={{ display: "flex", flexDirection: "column", gap: "40px" }}
             >
               <ContactItem icon={<MapPin size={18} />} title="Address">
                 Building 436-2, Road 3815, <br /> Block 338 – Manama, Bahrain
               </ContactItem>
-
               <ContactItem icon={<Phone size={18} />} title="Phone">
                 +973 3458 8466 <br /> +973 3422 1111
               </ContactItem>
-
               <ContactItem icon={<Mail size={18} />} title="Email">
                 info@luxury.com
               </ContactItem>
-
               <ContactItem icon={<Clock size={18} />} title="Inquiries">
                 Daily: 12:00 PM – 2:00 AM
               </ContactItem>
@@ -154,13 +163,7 @@ const Contact = () => {
               onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: "30px" }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "20px",
-                }}
-              >
+              <div className="form-grid">
                 <CustomInput
                   label="Name"
                   value={formData.name}
@@ -178,6 +181,7 @@ const Contact = () => {
                 value={formData.email}
                 onChange={(v) => setFormData({ ...formData, email: v })}
               />
+
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <label
                   style={{
@@ -205,34 +209,35 @@ const Contact = () => {
                     fontFamily: "'Jost', sans-serif",
                     outline: "none",
                     resize: "none",
-                    transition: "border 0.3s ease",
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = gold)}
-                  onBlur={(e) =>
-                    (e.target.style.borderColor = "rgba(201,169,110,0.2)")
-                  }
                 />
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
+                disabled={isSubmitting}
                 type="submit"
                 style={{
-                  background: gold,
+                  background: isSubmitting ? "rgba(201,169,110,0.5)" : gold,
                   color: dark,
                   border: "none",
                   padding: "18px",
-                  fontFamily: "'Jost', sans-serif",
-                  fontSize: "12px",
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
                   fontWeight: 600,
                   textTransform: "uppercase",
                   letterSpacing: "0.3em",
-                  cursor: "pointer",
-                  marginTop: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
                 }}
               >
-                Send Message
+                {isSubmitting ? (
+                  <Loader2 className="animate-spin" size={16} />
+                ) : (
+                  "Send Message"
+                )}
               </motion.button>
             </form>
           </motion.div>
@@ -242,11 +247,10 @@ const Contact = () => {
   );
 };
 
-// ─── Sub-Components ──────────────────────────────────────────────────────────
-
+// --- Sub-Components ---
 const ContactItem = ({ icon, title, children }) => (
   <div style={{ display: "flex", gap: "20px" }}>
-    <div style={{ color: gold, marginTop: "4px" }}>{icon}</div>
+    <div style={{ color: gold, flexShrink: 0 }}>{icon}</div>
     <div>
       <h4
         style={{
@@ -260,7 +264,7 @@ const ContactItem = ({ icon, title, children }) => (
       >
         {title}
       </h4>
-      <p
+      <div
         style={{
           fontFamily: "'Jost', sans-serif",
           fontSize: "15px",
@@ -270,7 +274,7 @@ const ContactItem = ({ icon, title, children }) => (
         }}
       >
         {children}
-      </p>
+      </div>
     </div>
   </div>
 );
@@ -308,6 +312,7 @@ const CustomInput = ({ label, value, onChange, type = "text" }) => (
         fontSize: "16px",
         outline: "none",
         padding: "5px 0",
+        width: "100%",
       }}
     />
   </div>

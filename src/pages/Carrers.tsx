@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Upload, CheckCircle } from "lucide-react";
 import axios from "axios";
 
@@ -84,18 +84,50 @@ const NATIONALITIES = [
   "Other",
 ];
 
+const DESIGNATIONS = [
+  "Chef/Cook",
+  "Hostess/Reservation/Reception",
+  "Security",
+  "Waiter/Waitress/Service",
+  "Housekeeping",
+  "Cashir/Account/Finance",
+  "Entertainment",
+  "Maintanance/Driver",
+  "Management Position",
+  "Other",
+];
+
+const LANGUAGES = ["English", "Arabic", "French", "Spanish"];
+
 const Carrers = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     nationality: "",
+    otherNationality: "",
     email: "",
     phone: "",
-    desiredPosition: "",
+    designation: "",
+    otherDesignation: "",
+    inBahrain: "",
+    workedInBahrain: "",
+    yearsWorkedInBahrain: "",
+    lastThreeCompanies: "",
+    usedMicros: "",
+    ownAccommodation: "",
+    languages: [],
   });
+
   const [cvFile, setCvFile] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const fileInputRef = useRef(null);
+
+  const handleLanguageChange = (lang) => {
+    const updated = formData.languages.includes(lang)
+      ? formData.languages.filter((l) => l !== lang)
+      : [...formData.languages, lang];
+    setFormData({ ...formData, languages: updated });
+  };
 
   const handleFile = (file) => {
     if (file && file.type === "application/pdf") setCvFile(file);
@@ -103,47 +135,48 @@ const Carrers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    // Logique pour formater la nationalité et la position si "Other" est choisi
+    const finalNationality =
+      formData.nationality === "Other"
+        ? formData.otherNationality
+        : formData.nationality;
+    const finalDesignation =
+      formData.designation === "Other"
+        ? formData.otherDesignation
+        : formData.designation;
+
     const payload = {
-      sender: {
-        name: "Luxuria Bot",
-        email: "no-reply@luxuriabahrain.com",
-      },
-      to: [
-        {
-          email: "m.aziz.hlel@gmail.com",
-        },
-      ],
-      subject: "New Application for Carrers",
-      textContent: `Name: ${formData.fullName}\n
-      Email: ${formData.email}\n
-      Phone: ${formData.phone}\n
-      Nationality: ${formData.nationality}\n
-      Desired Position: ${formData.desiredPosition}\n
-      CV: ${cvFile?.name}`,
+      sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
+      to: [{ email: "m.aziz.hlel@gmail.com" }],
+      subject: "New Career Application",
+      textContent: `
+        Name: ${formData.fullName}
+        Nationality: ${finalNationality}
+        Email: ${formData.email}
+        Phone: ${formData.phone}
+        Position: ${finalDesignation}
+        Currently in Bahrain: ${formData.inBahrain}
+        Worked in Bahrain before: ${formData.workedInBahrain}
+        ${formData.workedInBahrain === "Yes" ? `Years Experience: ${formData.yearsWorkedInBahrain}\nLast Companies: ${formData.lastThreeCompanies}` : ""}
+        Used Micros POS: ${formData.usedMicros}
+        Own Accommodation: ${formData.ownAccommodation}
+        Languages: ${formData.languages.join(", ")}
+        CV File: ${cvFile?.name}
+      `,
     };
+
     try {
       await sendEmail(payload);
-      setFormData({
-        fullName: "",
-        nationality: "",
-        email: "",
-        phone: "",
-        desiredPosition: "",
-      });
-      setCvFile(null);
       setSubmitted(true);
-      alert("Thank you for your application. We will get back to you shortly.");
+      alert("Thank you for your application.");
     } catch (error) {
-      alert(  
-        "An error occurred while sending your application. Please try again.",
-      );
+      alert("An error occurred. Please try again.");
     }
   };
 
-  const sendEmail = async (payload: object) => {
+  const sendEmail = async (payload) => {
     await axios.post("https://api.brevo.com/v3/smtp/email", payload, {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "api-key": import.meta.env.VITE_carrersKey,
@@ -153,7 +186,6 @@ const Carrers = () => {
 
   return (
     <main style={{ background: dark, color: cream, minHeight: "100vh" }}>
-      {/* ── HERO SECTION ── */}
       <section
         style={{ padding: "180px 24px 100px 24px", textAlign: "center" }}
       >
@@ -179,7 +211,6 @@ const Carrers = () => {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(48px, 8vw, 84px)",
               fontWeight: 300,
-              lineHeight: 1,
             }}
           >
             Join <em style={{ color: gold, fontStyle: "italic" }}>Our Team</em>
@@ -196,67 +227,53 @@ const Carrers = () => {
       </section>
 
       <section style={{ padding: "0 24px 160px 24px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{ textAlign: "center", padding: "60px 0" }}
+            >
+              <CheckCircle
+                size={48}
+                color={gold}
+                style={{ margin: "0 auto 24px" }}
+              />
+              <h4
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "24px",
-                  padding: "60px 0",
-                  textAlign: "center",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "28px",
                 }}
               >
-                <CheckCircle size={48} color={gold} strokeWidth={1.2} />
-                <h4
-                  style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "28px",
-                    fontWeight: 300,
-                  }}
-                >
-                  Application <em style={{ color: gold }}>Received</em>
-                </h4>
-                <p
-                  style={{
-                    fontFamily: "'Jost', sans-serif",
-                    fontSize: "14px",
-                    color: "rgba(245,240,232,0.6)",
-                    maxWidth: "300px",
-                  }}
-                >
-                  Thank you for your interest. We will review your application
-                  and be in touch shortly.
-                </p>
-              </motion.div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
+                Application <em style={{ color: gold }}>Received</em>
+              </h4>
+            </motion.div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              style={{ display: "flex", flexDirection: "column", gap: "40px" }}
+            >
+              <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "40px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                  gap: "30px",
                 }}
               >
-                {/* Row 1: Full Name + Nationality */}
+                <CustomInput
+                  label="Full Name"
+                  value={formData.fullName}
+                  onChange={(v) => setFormData({ ...formData, fullName: v })}
+                  placeholder="John Doe"
+                />
+
                 <div
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "30px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "15px",
                   }}
                 >
-                  <CustomInput
-                    label="Full Name"
-                    value={formData.fullName}
-                    onChange={(v) => setFormData({ ...formData, fullName: v })}
-                    placeholder="John Doe"
-                  />
                   <CustomSelect
                     label="Nationality"
                     value={formData.nationality}
@@ -265,153 +282,275 @@ const Carrers = () => {
                     }
                     options={NATIONALITIES}
                   />
+                  <AnimatePresence>
+                    {formData.nationality === "Other" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                      >
+                        <CustomInput
+                          label="Please specify nationality"
+                          value={formData.otherNationality}
+                          onChange={(v) =>
+                            setFormData({ ...formData, otherNationality: v })
+                          }
+                          placeholder="Type your nationality"
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
+              </div>
 
-                {/* Row 2: Email + Phone */}
-                <div
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                  gap: "30px",
+                }}
+              >
+                <CustomInput
+                  label="Email Address"
+                  type="email"
+                  value={formData.email}
+                  onChange={(v) => setFormData({ ...formData, email: v })}
+                  placeholder="email@example.com"
+                />
+                <CustomInput
+                  label="Phone Number"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(v) => setFormData({ ...formData, phone: v })}
+                  placeholder="+973 — — — —"
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "15px",
+                }}
+              >
+                <CustomSelect
+                  label="Choose your Designation / Department"
+                  value={formData.designation}
+                  onChange={(v) => setFormData({ ...formData, designation: v })}
+                  options={DESIGNATIONS}
+                />
+                <AnimatePresence>
+                  {formData.designation === "Other" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                    >
+                      <CustomInput
+                        label="Please specify position"
+                        value={formData.otherDesignation}
+                        onChange={(v) =>
+                          setFormData({ ...formData, otherDesignation: v })
+                        }
+                        placeholder="Type your desired role"
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                  gap: "30px",
+                }}
+              >
+                <CustomRadio
+                  label="Are you currently in Bahrain?"
+                  name="inBahrain"
+                  value={formData.inBahrain}
+                  onChange={(v) => setFormData({ ...formData, inBahrain: v })}
+                />
+                <CustomRadio
+                  label="Have you worked in Bahrain?"
+                  name="workedInBahrain"
+                  value={formData.workedInBahrain}
+                  onChange={(v) =>
+                    setFormData({ ...formData, workedInBahrain: v })
+                  }
+                />
+              </div>
+
+              {formData.workedInBahrain === "Yes" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    display: "flex",
+                    flexDirection: "column",
                     gap: "30px",
                   }}
                 >
                   <CustomInput
-                    label="Email Address"
-                    type="email"
-                    value={formData.email}
-                    onChange={(v) => setFormData({ ...formData, email: v })}
-                    placeholder="email@example.com"
+                    label="How many years have you worked in Bahrain?"
+                    value={formData.yearsWorkedInBahrain}
+                    onChange={(v) =>
+                      setFormData({ ...formData, yearsWorkedInBahrain: v })
+                    }
+                    placeholder="e.g. 5 years"
                   />
                   <CustomInput
-                    label="Phone Number"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(v) => setFormData({ ...formData, phone: v })}
-                    placeholder="+973 — — — —"
+                    label="Mention the last 3 companies"
+                    value={formData.lastThreeCompanies}
+                    onChange={(v) =>
+                      setFormData({ ...formData, lastThreeCompanies: v })
+                    }
+                    placeholder="Company A, Company B, Company C"
                   />
-                </div>
+                </motion.div>
+              )}
 
-                {/* Desired Position - Champ Texte Libre */}
-                <CustomInput
-                  label="Desired Position"
-                  value={formData.desiredPosition}
-                  onChange={(v) =>
-                    setFormData({ ...formData, desiredPosition: v })
-                  }
-                  placeholder="e.g. Senior Mixologist"
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                  gap: "30px",
+                }}
+              >
+                <CustomRadio
+                  label="Have you used Micros POS?"
+                  name="usedMicros"
+                  value={formData.usedMicros}
+                  onChange={(v) => setFormData({ ...formData, usedMicros: v })}
                 />
+                <CustomRadio
+                  label="Do you have your own accommodation in Bahrain?"
+                  name="ownAccommodation"
+                  value={formData.ownAccommodation}
+                  onChange={(v) =>
+                    setFormData({ ...formData, ownAccommodation: v })
+                  }
+                />
+              </div>
 
-                {/* CV Upload Section */}
-                <div>
-                  <label
-                    style={{
-                      fontSize: "10px",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.2em",
-                      color: "rgba(201,169,110,0.6)",
-                      display: "block",
-                      marginBottom: "15px",
-                    }}
-                  >
-                    Curriculum Vitae
-                  </label>
-                  <div
-                    onClick={() => fileInputRef.current?.click()}
-                    onDragOver={(e) => {
-                      e.preventDefault();
-                      setDragOver(true);
-                    }}
-                    onDragLeave={() => setDragOver(false)}
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      setDragOver(false);
-                      handleFile(e.dataTransfer.files[0]);
-                    }}
-                    style={{
-                      border: `1px dashed ${dragOver ? gold : "rgba(201,169,110,0.2)"}`,
-                      background: dragOver
-                        ? "rgba(201,169,110,0.03)"
-                        : "transparent",
-                      padding: "40px 20px",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".pdf"
-                      required={!cvFile}
-                      onChange={(e) => handleFile(e.target.files[0])}
-                      style={{ display: "none" }}
-                    />
-                    <Upload
-                      size={24}
-                      color={cvFile ? gold : "rgba(201,169,110,0.4)"}
-                      strokeWidth={1.2}
-                      style={{ margin: "0 auto 15px" }}
-                    />
-                    {cvFile ? (
-                      <p
-                        style={{
-                          fontFamily: "'Jost', sans-serif",
-                          fontSize: "13px",
-                          color: gold,
-                        }}
-                      >
-                        {cvFile.name}
-                      </p>
-                    ) : (
-                      <>
-                        <p
-                          style={{
-                            fontFamily: "'Jost', sans-serif",
-                            fontSize: "13px",
-                            color: "rgba(245,240,232,0.5)",
-                          }}
-                        >
-                          Drop your PDF or click to browse
-                        </p>
-                        <p
-                          style={{
-                            fontFamily: "'Jost', sans-serif",
-                            fontSize: "10px",
-                            color: "rgba(245,240,232,0.25)",
-                            marginTop: "5px",
-                          }}
-                        >
-                          MAX FILE SIZE 5MB
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <motion.button
-                  whileHover={{ backgroundColor: cream, color: dark }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
+              <div>
+                <label
                   style={{
-                    background: gold,
-                    color: dark,
-                    border: "none",
-                    padding: "20px",
-                    fontFamily: "'Jost', sans-serif",
-                    fontSize: "12px",
-                    fontWeight: 600,
+                    fontSize: "14px",
                     textTransform: "uppercase",
-                    letterSpacing: "0.3em",
-                    cursor: "pointer",
-                    transition: "all 0.4s ease",
+                    letterSpacing: "0.2em",
+                    color: "rgba(201,169,110,0.6)",
+                    display: "block",
+                    marginBottom: "15px",
                   }}
                 >
-                  Submit Application
-                </motion.button>
-              </form>
-            )}
-          </div>
+                  Which languages do you speak?
+                </label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+                  {LANGUAGES.map((lang) => (
+                    <label
+                      key={lang}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        cursor: "pointer",
+                        fontFamily: "'Jost', sans-serif",
+                        fontSize: "14px",
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.languages.includes(lang)}
+                        onChange={() => handleLanguageChange(lang)}
+                        style={{ accentColor: gold }}
+                      />
+                      {lang}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    fontSize: "14px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    color: "rgba(201,169,110,0.6)",
+                    display: "block",
+                    marginBottom: "15px",
+                  }}
+                >
+                  Curriculum Vitae (PDF)
+                </label>
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragOver(true);
+                  }}
+                  onDragLeave={() => setDragOver(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setDragOver(false);
+                    handleFile(e.dataTransfer.files[0]);
+                  }}
+                  style={{
+                    border: `1px dashed ${dragOver ? gold : "rgba(201,169,110,0.2)"}`,
+                    padding: "40px 20px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                    transition: "0.3s",
+                  }}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf"
+                    required={!cvFile}
+                    onChange={(e) => handleFile(e.target.files[0])}
+                    style={{ display: "none" }}
+                  />
+                  <Upload
+                    size={24}
+                    color={cvFile ? gold : "rgba(201,169,110,0.4)"}
+                    style={{ margin: "0 auto 15px" }}
+                  />
+                  <p
+                    style={{
+                      fontFamily: "'Jost', sans-serif",
+                      fontSize: "13px",
+                      color: cvFile ? gold : "rgba(245,240,232,0.5)",
+                    }}
+                  >
+                    {cvFile ? cvFile.name : "Drop your PDF or click to browse"}
+                  </p>
+                </div>
+              </div>
+
+              <motion.button
+                whileHover={{ backgroundColor: cream, color: dark }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                style={{
+                  background: gold,
+                  color: dark,
+                  border: "none",
+                  padding: "20px",
+                  fontFamily: "'Jost', sans-serif",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  cursor: "pointer",
+                }}
+              >
+                Submit Application
+              </motion.button>
+            </form>
+          )}
         </div>
       </section>
     </main>
@@ -437,7 +576,7 @@ const CustomInput = ({
   >
     <label
       style={{
-        fontSize: "10px",
+                    fontSize: "14px",
         textTransform: "uppercase",
         letterSpacing: "0.2em",
         color: "rgba(201,169,110,0.6)",
@@ -459,7 +598,6 @@ const CustomInput = ({
         fontFamily: "'Jost', sans-serif",
         fontSize: "15px",
         outline: "none",
-        padding: "5px 0",
       }}
     />
   </div>
@@ -496,18 +634,11 @@ const CustomSelect = ({ label, value, onChange, options }) => (
         fontFamily: "'Jost', sans-serif",
         fontSize: "15px",
         outline: "none",
-        padding: "5px 0",
         cursor: "pointer",
-        appearance: "none",
-        WebkitAppearance: "none",
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C9A96E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "right 0px center",
-        paddingRight: "20px",
       }}
     >
       <option value="" disabled>
-        Select Nationality
+        Select Option
       </option>
       {options.map((opt) => (
         <option
@@ -519,6 +650,47 @@ const CustomSelect = ({ label, value, onChange, options }) => (
         </option>
       ))}
     </select>
+  </div>
+);
+
+const CustomRadio = ({ label, name, value, onChange }) => (
+  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <label
+      style={{
+        fontSize: "10px",
+        textTransform: "uppercase",
+        letterSpacing: "0.2em",
+        color: "rgba(201,169,110,0.6)",
+      }}
+    >
+      {label}
+    </label>
+    <div style={{ display: "flex", gap: "20px" }}>
+      {["Yes", "No"].map((option) => (
+        <label
+          key={option}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+            fontFamily: "'Jost', sans-serif",
+            fontSize: "14px",
+          }}
+        >
+          <input
+            type="radio"
+            name={name}
+            value={option}
+            checked={value === option}
+            onChange={(e) => onChange(e.target.value)}
+            required
+            style={{ accentColor: gold }}
+          />
+          {option}
+        </label>
+      ))}
+    </div>
   </div>
 );
 
