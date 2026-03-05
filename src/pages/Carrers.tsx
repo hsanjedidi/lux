@@ -148,7 +148,7 @@ const Carrers = () => {
 
     const payload = {
       sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-      to: [{ email: "m.aziz.hlel@gmail.com" }],
+      to: [{ email: "cvs.voltobahrain@gmail.com" }],
       subject: "New Career Application",
       textContent: `
         Name: ${formData.fullName}

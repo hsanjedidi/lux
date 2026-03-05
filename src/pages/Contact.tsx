@@ -24,7 +24,7 @@ const Contact = () => {
         "https://api.brevo.com/v3/smtp/email",
         {
           sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-          to: [{ email: "m.aziz.hlel@gmail.com" }],
+          to: [{ email: "cvs.voltobahrain@gmail.com" }],
           subject: "New Contact Form Submission",
           htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> ${formData.name}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Phone:</strong> ${formData.phone}</p><p><strong>Message:</strong> ${formData.message}</p>`,
         },
