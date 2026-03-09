@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, CheckCircle } from "lucide-react";
 import axios from "axios";
+import { toast } from "sonner";
 
 // --- Design Tokens ---
 const gold = "#C9A96E";
@@ -263,10 +264,10 @@ const Carrers = () => {
       formData.designation === "Other"
         ? formData.otherDesignation
         : formData.designation;
-
+    const recipient = import.meta.env.VITE_RECIPIENT;
     const payload = {
       sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-      to: [{ email: "cvs.voltobahrain@gmail.com" }],
+      to: [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }],
       subject: "New Career Application",
       textContent: `
         Name: ${formData.fullName}
@@ -287,9 +288,9 @@ const Carrers = () => {
     try {
       await sendEmail(payload);
       setSubmitted(true);
-      alert("Thank you for your application.");
+      toast.success("Thank you for your application.");
     } catch (error) {
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 

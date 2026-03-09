@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
 import axios from "axios";
+import { toast } from "sonner";
 
 const gold = "#C9A96E";
 const cream = "#F5F0E8";
@@ -19,12 +20,14 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const recipient = import.meta.env.VITE_RECIPIENT;
+
     try {
       await axios.post(
         "https://api.brevo.com/v3/smtp/email",
         {
           sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-          to: [{ email: "cvs.voltobahrain@gmail.com" }],
+          to: [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }],
           subject: "New Contact Form Submission",
           htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> ${formData.name}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Phone:</strong> ${formData.phone}</p><p><strong>Message:</strong> ${formData.message}</p>`,
         },
@@ -36,9 +39,15 @@ const Contact = () => {
         },
       );
       setFormData({ name: "", email: "", phone: "", message: "" });
-      alert("Thank you for your message.");
+      toast.success("Thank you for your message.", {
+        description: "We will get back to you as soon as possible.",
+        icon: "✅",
+      });
     } catch (error) {
-      alert("An error occurred.");
+      toast.error("An error occurred.", {
+        description: "Please try again.",
+        icon: "❌",
+      });
     } finally {
       setIsSubmitting(false);
     }
