@@ -6,6 +6,14 @@ localhost:80 {
 
 
 localhost:443 {
+
+    # -----------------------
+    # API reverse proxy
+    # -----------------------
+    handle /api/* {
+        reverse_proxy api:3000
+    }
+
     root * /srv/web
     encode gzip
     file_server

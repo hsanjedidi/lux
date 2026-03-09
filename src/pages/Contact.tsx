@@ -24,17 +24,21 @@ const Contact = () => {
 
     try {
       await axios.post(
-        "https://api.brevo.com/v3/smtp/email",
+        import.meta.env.VITE_API_URL + "/send-contact",
         {
           sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
           to: [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }],
           subject: "New Contact Form Submission",
-          htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> ${formData.name}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Phone:</strong> ${formData.phone}</p><p><strong>Message:</strong> ${formData.message}</p>`,
+          htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> 
+          ${formData.name}</p><p><strong>Email:</strong> 
+          ${formData.email}</p><p><strong>Phone:</strong> 
+          ${formData.phone}</p><p><strong>Message:</strong> 
+          ${formData.message}</p>
+          `,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            "api-key": import.meta.env.VITE_contactUsKey,
           },
         },
       );

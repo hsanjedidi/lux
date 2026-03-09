@@ -8,13 +8,21 @@ services:
       args:
         VITE_API_URL: http://localhost:3000
         VITE_NODE_ENV: stage
-        VITE_carrersKey: ${VITE_carrersKey}
-        VITE_contactUsKey: ${VITE_contactUsKey}
+        VITE_RECIPIENT: ${VITE_RECIPIENT}
 
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./proxy/Caddyfile.stage:/etc/caddy/Caddyfile
+
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      args:
+        NODE_ENV: stage
+        carrersKey: ${carrersKey}
+        contactUsKey: ${contactUsKey}
 
     restart: unless-stopped

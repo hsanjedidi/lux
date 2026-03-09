@@ -8,8 +8,7 @@ services:
       args:
         VITE_API_URL: http://localhost:3000
         VITE_NODE_ENV: production
-        VITE_carrersKey: ${VITE_carrersKey}
-        VITE_contactUsKey: ${VITE_contactUsKey}
+        VITE_RECIPIENT: ${VITE_RECIPIENT}
 
     volumes:
       - ./proxy/Caddyfile:/etc/caddy/Caddyfile
@@ -18,6 +17,15 @@ services:
 
     networks:
       - default
+
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      args:
+        NODE_ENV: production
+        carrersKey: ${VITE_carrersKey}
+        contactUsKey: ${VITE_contactUsKey}
 
     restart: unless-stopped
 

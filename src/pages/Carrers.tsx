@@ -295,12 +295,15 @@ const Carrers = () => {
   };
 
   const sendEmail = async (payload) => {
-    await axios.post("https://api.brevo.com/v3/smtp/email", payload, {
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": import.meta.env.VITE_carrersKey,
+    await axios.post(
+      import.meta.env.VITE_API_URL + "/send-carrers",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
   };
 
   return (
