@@ -9,7 +9,13 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:5000",
+      "http://localhost:6969",
+      "https://luxuria.com",
+      "https://www.luxuria.com",
+    ],
+    credentials: true,
   }),
 );
 app.use(express.json());
