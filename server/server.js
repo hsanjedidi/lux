@@ -15,10 +15,13 @@ app.use(
       "https://luxuriabahrain.com",
       "https://www.luxuriabahrain.com",
     ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   }),
 );
-app.use(express.json());
+app.options("*", cors());
 
+app.use(express.json());
 app.post("/api/send-contact", async (req, res) => {
   try {
     const recipient = process.env.RECIPIENT;
