@@ -9,12 +9,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: [
-      "http://localhost:5000",
-      "http://localhost:6969",
-      "https://luxuriabahrain.com",
-      "https://www.luxuriabahrain.com",
-    ],
+    origin: "*",
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
   }),
