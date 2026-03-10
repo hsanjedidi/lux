@@ -20,14 +20,12 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const recipient = import.meta.env.VITE_RECIPIENT;
 
     try {
       await axios.post(
         import.meta.env.VITE_API_URL + "/send-contact",
         {
           sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-          to: [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }],
           subject: "New Contact Form Submission",
           htmlContent: `<h3>New Inquiry</h3><p><strong>Name:</strong> 
           ${formData.name}</p><p><strong>Email:</strong> 

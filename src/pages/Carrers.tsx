@@ -264,10 +264,8 @@ const Carrers = () => {
       formData.designation === "Other"
         ? formData.otherDesignation
         : formData.designation;
-    const recipient = import.meta.env.VITE_RECIPIENT;
     const payload = {
       sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-      to: [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }],
       subject: "New Career Application",
       textContent: `
         Name: ${formData.fullName}

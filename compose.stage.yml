@@ -6,13 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: http://localhost:3000
+        VITE_API_URL: http://localhost:6969/api
         VITE_NODE_ENV: stage
-        VITE_RECIPIENT: ${VITE_RECIPIENT}
 
     ports:
-      - "80:80"
-      - "443:443"
+      - "6969:6969"
     volumes:
       - ./proxy/Caddyfile.stage:/etc/caddy/Caddyfile
 
@@ -22,7 +20,11 @@ services:
       dockerfile: server/Dockerfile
       args:
         NODE_ENV: stage
-        carrersKey: ${carrersKey}
-        contactUsKey: ${contactUsKey}
+
+    environment:
+      NODE_ENV: stage
+      carrersKey: ${carrersKey}
+      contactUsKey: ${contactUsKey}
+      RECIPIENT: ${RECIPIENT}
 
     restart: unless-stopped
