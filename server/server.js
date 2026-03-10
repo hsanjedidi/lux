@@ -15,7 +15,6 @@ app.use(
       "https://luxuriabahrain.com",
       "https://www.luxuriabahrain.com",
     ],
-    credentials: true,
   }),
 );
 app.use(express.json());
