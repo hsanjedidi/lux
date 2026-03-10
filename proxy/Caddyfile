@@ -1,14 +1,26 @@
 
 :4000 {
-    root * /srv/web
-    encode gzip
-    file_server
-    try_files {path} /index.html
+    # -----------------------
+    # API 
+    # -----------------------
+    handle /api/* {
+        reverse_proxy api:3000
+    }
 
+
+
+    # -----------------------
+    # WEB 
+    # -----------------------
+    handle {
+        root * /srv/web
+        encode gzip
+        file_server
+        try_files {path} /index.html
+    }
     log {
 		level ERROR
         format console
     }
-	
 }
 
