@@ -12,8 +12,8 @@ app.use(
     origin: [
       "http://localhost:5000",
       "http://localhost:6969",
-      "https://luxuria.com",
-      "https://www.luxuria.com",
+      "https://luxuriabahrain.com",
+      "https://www.luxuriabahrain.com",
     ],
     credentials: true,
   }),
