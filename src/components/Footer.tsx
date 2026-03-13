@@ -7,7 +7,7 @@ const Footer = () => {
 
   const navLinks = [
     { label: "About", path: "/about" },
-    { label: "Hospitality Management", path: "/hospitality-management" },
+  { label: "Hospitality Management", path: "/hospitality-management" },
     { label: "Excellence Training", path: "/excellence-training" },
     { label: "Events", path: "/events" },
     { label: "Contact", path: "/contact" },
@@ -129,18 +129,31 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-24 md:mt-32 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-center">
-          <div className="text-[10px] tracking-[0.2em] text-neutral-600 uppercase">
-            © {currentYear} Luxuria Hospitality Management — CR.142116-1
-          </div>
-          <div className="flex space-x-8 md:space-x-10">
-            {["Privacy", "Legal"].map((text) => (
-              <a key={text} href="#" className="text-[10px] tracking-[0.2em] text-neutral-600 uppercase hover:text-white transition-colors">
-                {text}
-              </a>
-            ))}
-          </div>
-        </div>
+   <div className="mt-24 md:mt-32 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-center">
+  <div className="text-[10px] tracking-[0.2em] text-yellow-400 uppercase">
+    © {currentYear} Luxuria Hospitality Management —{" "}
+    <a 
+      href="https://technoshark.org/" // Remplacez par le bon lien
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="hover:text-white transition-colors duration-300"
+    >
+      by Techno Shark
+    </a>
+  </div>
+  
+  <div className="flex space-x-8 md:space-x-10">
+    {["Privacy", "Legal"].map((text) => (
+      <a 
+        key={text} 
+        href="#" 
+        className="text-[10px] tracking-[0.2em] text-neutral-600 uppercase hover:text-white transition-colors"
+      >
+        {text}
+      </a>
+    ))}
+  </div>
+</div>
       </div>
     </footer>
   );
