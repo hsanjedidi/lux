@@ -15,7 +15,7 @@ services:
       - luxuria-caddy-config:/config
 
     ports:
-      - 3020:4000
+      - 3030:4000
     networks:
       - default
 
