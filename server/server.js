@@ -17,6 +17,7 @@ app.use(
 app.options("*", cors());
 
 app.use(express.json());
+
 app.post("/api/send-contact", async (req, res) => {
   try {
     const recipient = process.env.RECIPIENT;
@@ -38,7 +39,7 @@ app.post("/api/send-contact", async (req, res) => {
     );
     res.json({ success: true, data: response.data });
   } catch (error) {
-    console.log("payload of the request on error : ", payload);
+    console.log("payload of the request on error : ", req.body);
     console.error(error.response?.data || error.message);
     res
       .status(500)
@@ -69,7 +70,7 @@ app.post("/api/send-carrers", async (req, res) => {
     res.json({ success: true, data: response.data });
   } catch (error) {
     console.error(error.response?.data || error.message);
-    console.log("payload of the request on error : ", payload);
+    console.log("payload of the request on error : ", req.body);
     res
       .status(500)
       .json({ success: false, error: error.response?.data || error.message });
