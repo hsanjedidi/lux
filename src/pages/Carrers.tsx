@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 // --- Design Tokens ---
-const gold = "#FFF";
+const gold = "#C9A96E";
 const cream = "#F5F0E8";
 const dark = "#0C0A08";
 
