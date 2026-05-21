@@ -236,55 +236,95 @@ const Carrers = () => {
     languages: [],
   });
 
-  const [cvFile, setCvFile] = useState(null);
+  const [cvFile, setCvFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleLanguageChange = (lang) => {
+  const handleLanguageChange = (lang: string) => {
     const updated = formData.languages.includes(lang)
       ? formData.languages.filter((l) => l !== lang)
       : [...formData.languages, lang];
     setFormData({ ...formData, languages: updated });
   };
 
-  const handleFile = (file) => {
-    if (file && file.type === "application/pdf") setCvFile(file);
+  const handleFile = (file: File | null | undefined) => {
+    if (!file) {
+      setCvFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    if (file.type !== "application/pdf") {
+      toast.error("Please upload a PDF file.");
+      setCvFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error("File size exceeds 5MB limit. Please upload a smaller PDF.");
+      setCvFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    setCvFile(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Logique pour formater la nationalité et la position si "Other" est choisi
     const finalNationality =
       formData.nationality === "Other"
         ? formData.otherNationality
         : formData.nationality;
+
     const finalDesignation =
       formData.designation === "Other"
         ? formData.otherDesignation
         : formData.designation;
-    const payload = {
-      sender: { name: "Luxuria Bot", email: "no-reply@luxuriabahrain.com" },
-      subject: "New Career Application",
-      textContent: `
-        Name: ${formData.fullName}
-        Nationality: ${finalNationality}
-        Email: ${formData.email}
-        Phone: ${formData.phone}
-        Position: ${finalDesignation}
-        Currently in Bahrain: ${formData.inBahrain}
-        Worked in Bahrain before: ${formData.workedInBahrain}
-        ${formData.workedInBahrain === "Yes" ? `Years Experience: ${formData.yearsWorkedInBahrain}\nLast Companies: ${formData.lastThreeCompanies}` : ""}
-        Used Micros POS: ${formData.usedMicros}
-        Own Accommodation: ${formData.ownAccommodation}
-        Languages: ${formData.languages.join(", ")}
-        CV File: ${cvFile?.name}
-      `,
-    };
+
+    const formatYesNo = (value) =>
+      value === true || value === "Yes" ? "Yes" : "No";
+
+    const form = new FormData();
+
+    form.append("fullName", formData.fullName);
+    form.append("nationality", finalNationality);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("designation", finalDesignation);
+
+    form.append("inBahrain", formatYesNo(formData.inBahrain));
+    form.append("workedInBahrain", formatYesNo(formData.workedInBahrain));
+
+    if (formData.workedInBahrain === "Yes") {
+      form.append("yearsWorkedInBahrain", formData.yearsWorkedInBahrain || "");
+      form.append("lastThreeCompanies", formData.lastThreeCompanies || "");
+    }
+
+    form.append("usedMicros", formatYesNo(formData.usedMicros));
+    form.append("ownAccommodation", formatYesNo(formData.ownAccommodation));
+
+    form.append(
+      "languages",
+      Array.isArray(formData.languages) ? formData.languages.join(", ") : "",
+    );
+
+    if (cvFile) {
+      form.append("cv", cvFile);
+    }
 
     try {
-      await sendEmail(payload);
+      await sendEmail(form);
       setSubmitted(true);
       toast.success("Thank you for your application.");
     } catch (error) {
@@ -293,15 +333,11 @@ const Carrers = () => {
   };
 
   const sendEmail = async (payload) => {
-    await axios.post(
-      import.meta.env.VITE_API_URL + "/send-carrers",
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    await axios.post(import.meta.env.VITE_API_URL + "/send-carrers", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
+    });
   };
 
   return (

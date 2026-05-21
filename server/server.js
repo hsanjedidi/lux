@@ -3,8 +3,13 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
+import multer from "multer";
 
 dotenv.config();
+
+const upload = multer({
+  storage: multer.memoryStorage(), // important: we need buffer for email
+});
 
 const app = express();
 app.use(
@@ -26,7 +31,7 @@ app.post("/api/send-contact", async (req, res) => {
       res.status(400).json({ success: false, error: "Invalid payload" });
       return;
     }
-    payload.to = [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }];
+    payload.to = [{ email: "m.aziz.hlel@gmail.com" }];
     const response = await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       payload,
@@ -47,15 +52,53 @@ app.post("/api/send-contact", async (req, res) => {
   }
 });
 
-app.post("/api/send-carrers", async (req, res) => {
+app.post("/api/send-carrers", upload.single("cv"), async (req, res) => {
   try {
     const recipient = process.env.RECIPIENT;
-    const payload = req.body;
-    if (typeof payload !== "object" || payload === null) {
-      res.status(400).json({ success: false, error: "Invalid payload" });
-      return;
-    }
-    payload.to = [{ email: recipient }, { email: "m.aziz.hlel@gmail.com" }];
+
+    const body = req.body;
+
+    const payload = {
+      sender: {
+        name: "Luxuria Bot",
+        email: "no-reply@luxuriabahrain.com",
+      },
+      to: [{ email: recipient }],
+      subject: "New Career Application",
+
+      textContent: `
+Name: ${body.fullName}
+Nationality: ${body.nationality}
+Email: ${body.email}
+Phone: ${body.phone}
+Position: ${body.designation}
+
+Currently in Bahrain : ${body.inBahrain}
+Worked in Bahrain before : ${body.workedInBahrain}
+${
+  body.workedInBahrain === "Yes"
+    ? `Years Experience in Bahrain : ${body.yearsWorkedInBahrain || "N/A"}
+Last Companies : ${body.lastThreeCompanies || "N/A"}`
+    : ""
+}
+
+Used Micros POS : ${body.usedMicros}
+Own Accommodation : ${body.ownAccommodation}
+Languages : ${body.languages}
+
+CV Attached : ${req.file ? "Yes" : "No"}
+`,
+
+      // 👇 THIS is the important part
+      attachment: req.file
+        ? [
+            {
+              name: req.file.originalname,
+              content: req.file.buffer.toString("base64"),
+            },
+          ]
+        : [],
+    };
 
     const response = await axios.post(
       "https://api.brevo.com/v3/smtp/email",
@@ -67,13 +110,15 @@ app.post("/api/send-carrers", async (req, res) => {
         },
       },
     );
+
     res.json({ success: true, data: response.data });
   } catch (error) {
     console.error(error.response?.data || error.message);
-    console.log("payload of the request on error : ", req.body);
-    res
-      .status(500)
-      .json({ success: false, error: error.response?.data || error.message });
+
+    res.status(500).json({
+      success: false,
+      error: error.response?.data || error.message,
+    });
   }
 });
 
